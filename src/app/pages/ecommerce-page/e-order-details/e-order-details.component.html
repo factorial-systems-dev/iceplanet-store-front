@@ -89,7 +89,7 @@
                 <div class="recent-orders-table">
                     <div class="table-responsive">
                         <table mat-table [dataSource]="dataSource">
-        
+
                             <!-- Order ID Column -->
                             <ng-container matColumnDef="orderID">
                                 <th mat-header-cell *matHeaderCellDef>
@@ -99,11 +99,11 @@
                                     {{element.orderID}}
                                 </td>
                             </ng-container>
-        
-                            <!-- Product Column -->
+
+                            <!-- ProductModel Column -->
                             <ng-container matColumnDef="product">
                                 <th mat-header-cell *matHeaderCellDef>
-                                    Product
+                                    ProductModel
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     <div class="info d-flex align-items-center">
@@ -116,7 +116,7 @@
                                     </div>
                                 </td>
                             </ng-container>
-        
+
                             <!-- Items Column -->
                             <ng-container matColumnDef="items">
                                 <th mat-header-cell *matHeaderCellDef>
@@ -126,7 +126,7 @@
                                     {{element.items}}
                                 </td>
                             </ng-container>
-        
+
                             <!-- Price Column -->
                             <ng-container matColumnDef="price">
                                 <th mat-header-cell *matHeaderCellDef>
@@ -136,7 +136,7 @@
                                     {{element.price}}
                                 </td>
                             </ng-container>
-        
+
                             <!-- Total Column -->
                             <ng-container matColumnDef="total">
                                 <th mat-header-cell *matHeaderCellDef>
@@ -146,10 +146,10 @@
                                     {{element.total}}
                                 </td>
                             </ng-container>
-        
+
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        
+
                         </table>
                     </div>
                 </div>
@@ -295,7 +295,7 @@
         </mat-card>
     </div>
     <div class="col-lg-4 col-md-6">
-        <mat-card 
+        <mat-card
             class="daxa-card order-details-card mb-25 border-radius bg-white border-none d-block"
             [class.rtl-enabled]="themeService.isRTLEnabled()"
         >

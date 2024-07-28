@@ -45,7 +45,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         orderID: ' #ARP-1423',
         product: {
-            img: 'images/products/product3.png',
+            img: 'images/products/product1.png',
             name: 'Gaming Laptop'
         },
         items: 3,
@@ -55,7 +55,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         orderID: ' #ARP-4312',
         product: {
-            img: 'images/products/product8.png',
+            img: 'images/products/product6.png',
             name: 'Sports Shoes'
         },
         items: 1,
@@ -65,7 +65,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         orderID: ' #ARP-3124',
         product: {
-            img: 'images/products/product9.png',
+            img: 'images/products/product6.png',
             name: 'Woman Handbag'
         },
         items: 5,
@@ -75,7 +75,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         orderID: ' #ARP-1234',
         product: {
-            img: 'images/products/product10.png',
+            img: 'images/products/product6.png',
             name: 'Luxury Rendering'
         },
         items: 2,

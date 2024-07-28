@@ -1,7 +1,7 @@
 <!-- Breadcrumb -->
 <div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
     <h5 class="mb-0">
-        Products Grid
+        Products
     </h5>
     <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
         <li class="breadcrumb-item position-relative">
@@ -20,16 +20,8 @@
     [class.rtl-enabled]="themeService.isRTLEnabled()"
 >
     <div class="col-md-4 col-lg-3">
-
         <!-- Filter Sidebar Card -->
         <mat-card class="daxa-card filter-sidebar-card mb-25 border-radius bg-white border-none d-block">
-            <mat-card-header>
-                <mat-card-title>
-                    <h5 class="mb-0">
-                        Filter
-                    </h5>
-                </mat-card-title>
-            </mat-card-header>
             <mat-card-content>
                 <div class="filter-item">
                     <span class="d-block fw-medium">
@@ -39,7 +31,7 @@
                         <i class="material-symbols-outlined">
                             search
                         </i>
-                        <input type="text" class="input-search d-block w-100 border-none outline-0" placeholder="Search product...">
+                        <input type="text" class="input-search d-block w-100 border-none outline-0" placeholder="Search product..." #input>
                     </form>
                 </div>
 
@@ -48,61 +40,10 @@
                         Categories
                     </span>
                     <ul class="filters-list pl-0 mb-0 list-unstyled">
-                        <li class="d-flex align-items-center justify-content-between">
-                            <mat-checkbox>
-                                Chicken
+                        <li *ngFor="let category of (categories$ | async)" class="d-flex align-items-center justify-content-between">
+                            <mat-checkbox (change)="onCategoryMatChange($event, category)">
+                                {{category}}
                             </mat-checkbox>
-                            <span class="number d-block text-body">
-                                246
-                            </span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-between">
-                            <mat-checkbox>
-                                Turkey
-                            </mat-checkbox>
-                            <span class="number d-block text-body">
-                                85
-                            </span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-between">
-                            <mat-checkbox>
-                                Fish
-                            </mat-checkbox>
-                            <span class="number d-block text-body">
-                                99
-                            </span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-between">
-                            <mat-checkbox>
-                                Chips
-                            </mat-checkbox>
-                            <span class="number d-block text-body">
-                                27
-                            </span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-between">
-                            <mat-checkbox>
-                                Sausage
-                            </mat-checkbox>
-                            <span class="number d-block text-body">
-                                16
-                            </span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-between">
-                            <mat-checkbox>
-                                Burger
-                            </mat-checkbox>
-                            <span class="number d-block text-body">
-                                38
-                            </span>
-                        </li>
-                        <li class="d-flex align-items-center justify-content-between">
-                            <mat-checkbox>
-                                Exotic Sea Food
-                            </mat-checkbox>
-                            <span class="number d-block text-body">
-                                24
-                            </span>
                         </li>
                     </ul>
                 </div>
@@ -110,428 +51,71 @@
         </mat-card>
 
     </div>
-    <div class="col-md-8 col-lg-9">
 
+    <div class="col-md-8 col-lg-9" *ngIf="(products$ | async) as products">
         <!-- Products -->
         <div class="row">
-            <div class="col-sm-6 col-lg-4">
+            <div class="col-sm-6 col-lg-4" *ngFor="let product of products.products">
                 <mat-card class="daxa-card product-card text-center mb-25 border-radius p-0 bg-white border-none d-block">
                     <mat-card-content>
                         <div class="image position-relative border-radius">
-                            <a routerLink="/ecommerce-page/product-details" class="d-block border-radius">
-                                <img src="images/products/product1.jpg" class="border-radius transition" alt="product-image">
+                            <a [routerLink]="['/shop/product-details', product._id]" class="d-block border-radius">
+                                <img [src]="'/images/products/product1.jpg'" class="border-radius transition" alt="product-image">
                             </a>
-                            <button mat-fab (click)="onWishList()">
+                            <button mat-fab (click)="addToCart($event)">
                                 <i class="ri-shopping-cart-2-line"></i>
                             </button>
                         </div>
                         <div class="content">
                             <h5>
-                                <a routerLink="/ecommerce-page/product-details">
-                                    Kote
+                                <a [routerLink]="['/shop/product-details', product._id]">
+                                    {{product.name}}
                                 </a>
                             </h5>
                             <div class="price d-flex align-items-center justify-content-center lh-1">
-                                <span class="text-black fw-medium d-block">
-                                    {{ 15000 | currency: "₦":"symbol":"1.0-0" }}
+                                <span class="text-black fw-medium d-block" [id]="product._id">
+                                    {{ product.bundles[0].price | currency: "₦":"symbol":"1.0-0" }}
                                 </span>
                             </div>
 
                             <mat-form-field>
                                 <mat-label>Bundle</mat-label>
-                                <mat-select>
-                                    @for (food of foods; track food) {
-                                        <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                                <mat-select [value]="product.bundles[0]._id" (selectionChange)="onSelectChange($event, product._id)">
+                                    @for (bundle of product.bundles; track bundle) {
+                                        <mat-option [value]="bundle._id">{{bundle.unit}}</mat-option>
                                     }
                                 </mat-select>
                             </mat-form-field>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <mat-card class="daxa-card product-card text-center mb-25 border-radius p-0 bg-white border-none d-block">
-                    <mat-card-content>
-                        <div class="image position-relative border-radius">
-                            <a routerLink="/ecommerce-page/product-details" class="d-block border-radius">
-                                <img src="images/products/product1.jpg" class="border-radius transition" alt="product-image">
-                            </a>
-                            <button mat-fab (click)="onWishList()">
-                                <i class="ri-shopping-cart-2-line"></i>
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5>
-                                <a routerLink="/ecommerce-page/product-details">
-                                    Kote
-                                </a>
-                            </h5>
-                            <div class="price d-flex align-items-center justify-content-center lh-1">
-                                <span class="text-black fw-medium d-block">
-                                    {{ 15000 | currency: "₦":"symbol":"1.0-0" }}
-                                </span>
-
-                            </div>
-
-                            <mat-form-field>
-                                <mat-label>Favorite food</mat-label>
-                                <mat-select>
-                                    @for (food of foods; track food) {
-                                        <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-                                    }
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <mat-card class="daxa-card product-card text-center mb-25 border-radius p-0 bg-white border-none d-block">
-                    <mat-card-content>
-                        <div class="image position-relative border-radius">
-                            <a routerLink="/ecommerce-page/product-details" class="d-block border-radius">
-                                <img src="images/products/product3.jpg" class="border-radius transition" alt="product-image">
-                            </a>
-                            <button mat-fab>
-                                <i class="ri-heart-line"></i>
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5>
-                                <a routerLink="/ecommerce-page/product-details">
-                                    Gaming Laptop
-                                </a>
-                            </h5>
-                            <div class="price d-flex align-items-center justify-content-center lh-1">
-                                <span class="text-black fw-medium d-block">
-                                    $25.00
-                                </span>
-                                <span class="text-body d-block">
-                                    $300.00
-                                </span>
-                            </div>
-                            <div class="ratings lh-1 d-flex align-items-center justify-content-center text-body">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-line"></i>
-                                <span class="d-inline-block position-relative">
-                                    (4)
-                                </span>
-                            </div>
-                            <button mat-button>
-                                <i class="material-symbols-outlined">
-                                    shopping_basket
-                                </i>
-                                Add To Cart
-                            </button>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <mat-card class="daxa-card product-card text-center mb-25 border-radius p-0 bg-white border-none d-block">
-                    <mat-card-content>
-                        <div class="image position-relative border-radius">
-                            <a routerLink="/ecommerce-page/product-details" class="d-block border-radius">
-                                <img src="images/products/product4.jpg" class="border-radius transition" alt="product-image">
-                            </a>
-                            <button mat-fab>
-                                <i class="ri-heart-line"></i>
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5>
-                                <a routerLink="/ecommerce-page/product-details">
-                                    Wireless Headphone
-                                </a>
-                            </h5>
-                            <div class="price d-flex align-items-center justify-content-center lh-1">
-                                <span class="text-black fw-medium d-block">
-                                    $80.00
-                                </span>
-                                <span class="text-body d-block">
-                                    $100.00
-                                </span>
-                            </div>
-                            <div class="ratings lh-1 d-flex align-items-center justify-content-center text-body">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-half-line"></i>
-                                <i class="ri-star-line"></i>
-                                <span class="d-inline-block position-relative">
-                                    (3.5)
-                                </span>
-                            </div>
-                            <button mat-button>
-                                <i class="material-symbols-outlined">
-                                    shopping_basket
-                                </i>
-                                Add To Cart
-                            </button>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <mat-card class="daxa-card product-card text-center mb-25 border-radius p-0 bg-white border-none d-block">
-                    <mat-card-content>
-                        <div class="image position-relative border-radius">
-                            <a routerLink="/ecommerce-page/product-details" class="d-block border-radius">
-                                <img src="images/products/product5.jpg" class="border-radius transition" alt="product-image">
-                            </a>
-                            <button mat-fab>
-                                <i class="ri-heart-line"></i>
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5>
-                                <a routerLink="/ecommerce-page/product-details">
-                                    Hand Watch
-                                </a>
-                            </h5>
-                            <div class="price d-flex align-items-center justify-content-center lh-1">
-                                <span class="text-black fw-medium d-block">
-                                    $120.00
-                                </span>
-                                <span class="text-body d-block">
-                                    $130.00
-                                </span>
-                            </div>
-                            <div class="ratings lh-1 d-flex align-items-center justify-content-center text-body">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-line"></i>
-                                <i class="ri-star-line"></i>
-                                <span class="d-inline-block position-relative">
-                                    (3)
-                                </span>
-                            </div>
-                            <button mat-button>
-                                <i class="material-symbols-outlined">
-                                    shopping_basket
-                                </i>
-                                Add To Cart
-                            </button>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <mat-card class="daxa-card product-card text-center mb-25 border-radius p-0 bg-white border-none d-block">
-                    <mat-card-content>
-                        <div class="image position-relative border-radius">
-                            <a routerLink="/ecommerce-page/product-details" class="d-block border-radius">
-                                <img src="images/products/product6.jpg" class="border-radius transition" alt="product-image">
-                            </a>
-                            <button mat-fab>
-                                <i class="ri-heart-line"></i>
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5>
-                                <a routerLink="/ecommerce-page/product-details">
-                                    Futuristic Bracelet
-                                </a>
-                            </h5>
-                            <div class="price d-flex align-items-center justify-content-center lh-1">
-                                <span class="text-black fw-medium d-block">
-                                    $15.00
-                                </span>
-                                <span class="text-body d-block">
-                                    $19.00
-                                </span>
-                            </div>
-                            <div class="ratings lh-1 d-flex align-items-center justify-content-center text-body">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-line"></i>
-                                <span class="d-inline-block position-relative">
-                                    (4)
-                                </span>
-                            </div>
-                            <button mat-button>
-                                <i class="material-symbols-outlined">
-                                    shopping_basket
-                                </i>
-                                Add To Cart
-                            </button>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <mat-card class="daxa-card product-card text-center mb-25 border-radius p-0 bg-white border-none d-block">
-                    <mat-card-content>
-                        <div class="image position-relative border-radius">
-                            <a routerLink="/ecommerce-page/product-details" class="d-block border-radius">
-                                <img src="images/products/product7.jpg" class="border-radius transition" alt="product-image">
-                            </a>
-                            <button mat-fab>
-                                <i class="ri-heart-line"></i>
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5>
-                                <a routerLink="/ecommerce-page/product-details">
-                                    Triblend T-shirt
-                                </a>
-                            </h5>
-                            <div class="price d-flex align-items-center justify-content-center lh-1">
-                                <span class="text-black fw-medium d-block">
-                                    $45.00
-                                </span>
-                                <span class="text-body d-block">
-                                    $75.00
-                                </span>
-                            </div>
-                            <div class="ratings lh-1 d-flex align-items-center justify-content-center text-body">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-line"></i>
-                                <span class="d-inline-block position-relative">
-                                    (4)
-                                </span>
-                            </div>
-                            <button mat-button>
-                                <i class="material-symbols-outlined">
-                                    shopping_basket
-                                </i>
-                                Add To Cart
-                            </button>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <mat-card class="daxa-card product-card text-center mb-25 border-radius p-0 bg-white border-none d-block">
-                    <mat-card-content>
-                        <div class="image position-relative border-radius">
-                            <a routerLink="/ecommerce-page/product-details" class="d-block border-radius">
-                                <img src="images/products/product8.jpg" class="border-radius transition" alt="product-image">
-                            </a>
-                            <button mat-fab>
-                                <i class="ri-heart-line"></i>
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5>
-                                <a routerLink="/ecommerce-page/product-details">
-                                    Sports Shoes
-                                </a>
-                            </h5>
-                            <div class="price d-flex align-items-center justify-content-center lh-1">
-                                <span class="text-black fw-medium d-block">
-                                    $55.00
-                                </span>
-                                <span class="text-body d-block">
-                                    $70.00
-                                </span>
-                            </div>
-                            <div class="ratings lh-1 d-flex align-items-center justify-content-center text-body">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-half-line"></i>
-                                <i class="ri-star-line"></i>
-                                <span class="d-inline-block position-relative">
-                                    (4.5)
-                                </span>
-                            </div>
-                            <button mat-button>
-                                <i class="material-symbols-outlined">
-                                    shopping_basket
-                                </i>
-                                Add To Cart
-                            </button>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <mat-card class="daxa-card product-card text-center mb-25 border-radius p-0 bg-white border-none d-block">
-                    <mat-card-content>
-                        <div class="image position-relative border-radius">
-                            <a routerLink="/ecommerce-page/product-details" class="d-block border-radius">
-                                <img src="images/products/product9.jpg" class="border-radius transition" alt="product-image">
-                            </a>
-                            <button mat-fab>
-                                <i class="ri-heart-line"></i>
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5>
-                                <a routerLink="/ecommerce-page/product-details">
-                                    Woman Handbag
-                                </a>
-                            </h5>
-                            <div class="price d-flex align-items-center justify-content-center lh-1">
-                                <span class="text-black fw-medium d-block">
-                                    $75.00
-                                </span>
-                                <span class="text-body d-block">
-                                    $90.00
-                                </span>
-                            </div>
-                            <div class="ratings lh-1 d-flex align-items-center justify-content-center text-body">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <span class="d-inline-block position-relative">
-                                    (5)
-                                </span>
-                            </div>
-                            <button mat-button>
-                                <i class="material-symbols-outlined">
-                                    shopping_basket
-                                </i>
-                                Add To Cart
-                            </button>
                         </div>
                     </mat-card-content>
                 </mat-card>
             </div>
         </div>
 
+        <ng-template #loading>
+            Loading Please Wait...
+        </ng-template>
+
         <!-- Pagination -->
         <div class="pagination-card mb-25 d-lg-flex align-items-center justify-content-between">
             <p class="mb-0">
-                Showing 1 to 9 of 50 entries
+                Showing {{ ((products.current  - 1) * products.size) + 1 }} to {{ Number(((products.current  - 1) * products.size) + products.current_size)  }} of {{products.count}} entries
             </p>
             <ol class="pagination list-unstyled mt-0 mb-0 pl-0">
                 <li class="pagination-item d-inline-block">
-                    <a mat-button routerLink="/ecommerce-page">
+                    <a mat-button>
                         <i class="material-symbols-outlined">
                             west
                         </i>
                     </a>
                 </li>
-                <li class="pagination-item d-inline-block">
-                    <a mat-button routerLink="/ecommerce-page" class="active">
-                        1
+                <li class="pagination-item d-inline-block" *ngFor="let n of [].constructor(products.pages) index as i">
+                    <a mat-button [ngClass]="{'active': i === products.current - 1}" (click)="refreshPage(i + 1)">
+                        {{i + 1}}
                     </a>
                 </li>
                 <li class="pagination-item d-inline-block">
-                    <a mat-button routerLink="/ecommerce-page">
-                        2
-                    </a>
-                </li>
-                <li class="pagination-item d-inline-block">
-                    <a mat-button routerLink="/ecommerce-page">
-                        3
-                    </a>
-                </li>
-                <li class="pagination-item d-inline-block">
-                    <a mat-button routerLink="/ecommerce-page">
+                    <a mat-button>
                         <i class="material-symbols-outlined">
                             east
                         </i>
@@ -539,6 +123,5 @@
                 </li>
             </ol>
         </div>
-
     </div>
 </div>

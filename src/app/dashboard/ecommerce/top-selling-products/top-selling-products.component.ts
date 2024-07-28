@@ -57,7 +57,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         number: '02.',
         product: {
-            productImage: 'images/products/product2.png',
+            productImage: 'images/products/product1.png',
             productName: 'Mobile Phone',
             productSold: '876 Items Sold'
         },
@@ -67,7 +67,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         number: '03.',
         product: {
-            productImage: 'images/products/product3.png',
+            productImage: 'images/products/product1.png',
             productName: 'Laptop Device',
             productSold: '823 Items Sold'
         },
@@ -77,7 +77,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         number: '04.',
         product: {
-            productImage: 'images/products/product4.png',
+            productImage: 'images/products/product1.png',
             productName: 'Black T-Shirt',
             productSold: '743 Items Sold'
         },
@@ -87,7 +87,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         number: '05.',
         product: {
-            productImage: 'images/products/product5.png',
+            productImage: 'images/products/product1.png',
             productName: 'Headphones',
             productSold: '693 Items Sold'
         },
@@ -107,7 +107,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         number: '07.',
         product: {
-            productImage: 'images/products/product7.png',
+            productImage: 'images/products/product6.png',
             productName: 'Gaming Laptop',
             productSold: '214 Items Sold'
         },
@@ -117,7 +117,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         number: '08.',
         product: {
-            productImage: 'images/products/product8.png',
+            productImage: 'images/products/product6.png',
             productName: 'Sports Shoes',
             productSold: '342 Items Sold'
         },
@@ -127,7 +127,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         number: '09.',
         product: {
-            productImage: 'images/products/product9.png',
+            productImage: 'images/products/product6.png',
             productName: '437 Handbag',
             productSold: '953 Items Sold'
         },
@@ -137,7 +137,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         number: '10.',
         product: {
-            productImage: 'images/products/product10.png',
+            productImage: 'images/products/product6.png',
             productName: 'Luxury Rendering',
             productSold: '524 Items Sold'
         },
@@ -157,7 +157,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     {
         number: '12.',
         product: {
-            productImage: 'images/products/product7.png',
+            productImage: 'images/products/product6.png',
             productName: 'Gaming Laptop',
             productSold: '214 Items Sold'
         },

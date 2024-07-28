@@ -39,7 +39,7 @@
                 </button>
             </li>
 
-            <li>
+            <li *ngIf="!(authService.user$ | async)">
                 <button
                     mat-button
                     class="notifications-menu-bt p-0"
@@ -47,6 +47,18 @@
                 >
                     <i class="material-symbols-outlined">
                         login
+                    </i>
+                </button>
+            </li>
+
+            <li *ngIf="(authService.user$ | async)">
+                <button
+                    mat-button
+                    class="notifications-menu-bt p-0"
+                    (click)="logout()"
+                >
+                    <i class="material-symbols-outlined">
+                        logout
                     </i>
                 </button>
             </li>
@@ -62,7 +74,7 @@
                 </button>
             </li>
 
-            <li>
+            <li  *ngIf="(authService.user$ | async)">
                 <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-menu-btn">
                     <img src="images/admin.png" alt="profile-image">
                     <span class="status d-inline-block rounded-circle position-absolute"></span>

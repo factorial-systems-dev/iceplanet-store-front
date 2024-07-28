@@ -5,10 +5,10 @@
             .mat-mdc-card-content {
                 .filter-item {
                     margin-bottom: 20px;
-            
+
                     .search-box {
                         margin-top: 10px;
-            
+
                         i {
                             transform: translateY(-50%);
                             color: var(--blackColor);
@@ -108,7 +108,7 @@
                                     .mdc-checkbox {
                                         margin: 0;
                                         padding: 0;
-        
+
                                         .mdc-checkbox__native-control {
                                             top: 0;
                                             left: 0;
@@ -497,7 +497,7 @@
                             .input-search {
                                 background: rgba(255, 255, 255, .07);
                                 color: var(--whiteColor);
-                                
+
                                 &::placeholder {
                                     color: rgba(255, 255, 255, .50);
                                 }
@@ -724,7 +724,7 @@
                 .mat-mdc-card-content {
                     .filter-item {
                         margin-bottom: 15px;
-                
+
                         .search-box {
                             margin-top: 8px;
                         }
@@ -748,7 +748,7 @@
                             }
                             &.colors {
                                 margin-bottom: -6px;
-    
+
                                 li {
                                     margin: {
                                         right: 6px;
@@ -804,13 +804,13 @@
                     }
                     .content {
                         padding: 15px;
-    
+
                         h5 {
                             margin-bottom: 11px;
                         }
                         .price {
                             margin-bottom: 12px;
-    
+
                             span {
                                 &:nth-child(1) {
                                     font-size: 16px;

@@ -41,26 +41,17 @@ import { EOrderDetailsComponent } from './pages/ecommerce-page/e-order-details/e
 import { EOrdersComponent } from './pages/ecommerce-page/e-orders/e-orders.component';
 import { EProductDetailsComponent } from './pages/ecommerce-page/e-product-details/e-product-details.component';
 import { EProductsGridComponent } from './pages/ecommerce-page/e-products-grid/e-products-grid.component';
-import { EcommercePageComponent } from './pages/ecommerce-page/ecommerce-page.component';
+import {AuthGuard} from "./authentication/auth-guard.service";
 
 export const routes: Routes = [
     {path: '', component: EProductsGridComponent},
-    {path: 'dashboard', component: EcommerceComponent},
-    {path: 'orders', component: EOrdersComponent},
+    {path: 'shop/product-details/:id', component: EProductDetailsComponent},
+    {path: 'dashboard', component: EcommerceComponent, canActivate: [AuthGuard]},
+    {path: 'order/orders', component: EOrdersComponent, canActivate: [AuthGuard]},
+    {path: 'order/order-details/:id', component: EOrderDetailsComponent, canActivate: [AuthGuard]},
+    {path: 'order/order-tracking/:id', component: EOrderTrackingComponent, canActivate: [AuthGuard]},
     {path: 'cart', component: ECartComponent},
     {path: 'checkout', component: ECheckoutComponent},
-    {
-        path: 'ecommerce-page',
-        component: EcommercePageComponent,
-        children: [
-            {path: 'product-details', component: EProductDetailsComponent},
-            {path: 'orders', component: EOrdersComponent},
-            {path: 'order-details', component: EOrderDetailsComponent},
-            {path: 'order-tracking', component: EOrderTrackingComponent},
-            {path: 'cart', component: ECartComponent},
-            {path: 'checkout', component: ECheckoutComponent},
-        ]
-    },
     {
         path: 'invoices',
         component: InvoicesPageComponent,

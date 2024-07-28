@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CommonModule, NgClass, ViewportScroller } from '@angular/common';
 import { RouterOutlet, Router, Event, NavigationEnd } from '@angular/router';
 import { SidebarComponent } from './common/sidebar/sidebar.component';
@@ -7,6 +7,7 @@ import { FooterComponent } from './common/footer/footer.component';
 import { CustomizerSettingsComponent } from './customizer-settings/customizer-settings.component';
 import { CustomizerSettingsService } from './customizer-settings/customizer-settings.service';
 import { ToggleService } from './common/sidebar/toggle.service';
+import {AuthService} from "./authentication/auth.service";
 
 @Component({
     selector: 'app-root',
@@ -15,7 +16,7 @@ import { ToggleService } from './common/sidebar/toggle.service';
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
     // Title
     title = 'Daxa - Angular 18 Material Design Admin Dashboard Template';
@@ -28,6 +29,7 @@ export class AppComponent {
 
     constructor(
         public router: Router,
+        private authService: AuthService,
         private toggleService: ToggleService,
         private viewportScroller: ViewportScroller,
         public themeService: CustomizerSettingsService
@@ -46,4 +48,7 @@ export class AppComponent {
         });
     }
 
+    ngOnInit(): void {
+        this.authService.autoLogin();
+    }
 }

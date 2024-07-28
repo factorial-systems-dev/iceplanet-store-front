@@ -47,11 +47,11 @@ export class StackedColumnChartComponent {
         this.chartOptions = {
             series: [
                 {
-                    name: "Product A",
+                    name: "ProductModel A",
                     data: [44, 55, 41, 67, 22, 43]
                 },
                 {
-                    name: "Product B",
+                    name: "ProductModel B",
                     data: [13, 23, 20, 8, 13, 27]
                 },
                 {

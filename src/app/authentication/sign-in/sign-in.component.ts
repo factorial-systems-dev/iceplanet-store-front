@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import { Router } from '@angular/router';
-import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
+import {SnackbarService} from "../../shared/service/snackbar.service";
+import {AuthService} from "../auth.service";
+import {Subscription} from "rxjs";
+import {tap} from "rxjs/operators";
 
 @Component({
     selector: 'app-sign-in',
@@ -16,36 +18,43 @@ import { CustomizerSettingsService } from '../../customizer-settings/customizer-
     templateUrl: './sign-in.component.html',
     styleUrl: './sign-in.component.scss'
 })
-export class SignInComponent {
-
-    // isToggled
-    isToggled = false;
-
-    constructor(
-        private fb: FormBuilder,
-        private router: Router,
-        public themeService: CustomizerSettingsService
-    ) {
-        this.authForm = this.fb.group({
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.minLength(8)]],
-        });
-        this.themeService.isToggled$.subscribe(isToggled => {
-            this.isToggled = isToggled;
-        });
-    }
+export class SignInComponent implements OnDestroy {
+    private subscription: Subscription;
 
     // Password Hide
     hide = true;
 
     // Form
     authForm: FormGroup;
+
+    constructor(
+        private fb: FormBuilder,
+        private router: Router,
+        private snackbarService: SnackbarService,
+        private authService: AuthService
+    ) {
+        this.authForm = this.fb.group({
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', [Validators.required, Validators.minLength(8)]],
+        });
+    }
+
     onSubmit() {
         if (this.authForm.valid) {
-            this.router.navigate(['/']);
+            const email = this.authForm.value.email;
+            const password = this.authForm.value.password;
+            this.subscription = this.authService.login(email, password)
+                .pipe(
+                    tap(() => this.router.navigate(['/']))
+                ).subscribe();
         } else {
-            console.log('Form is invalid. Please check the fields.');
+            this.snackbarService.message('Invalid email or password', );
         }
     }
 
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe()
+        }
+    }
 }

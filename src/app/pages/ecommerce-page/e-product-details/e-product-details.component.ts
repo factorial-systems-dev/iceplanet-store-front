@@ -42,13 +42,13 @@ export class EProductDetailsComponent {
             url: 'images/products/product-details1.jpg'
         },
         {
-            url: 'images/products/product-details2.jpg'
+            url: 'images/products/product-details1.jpg'
         },
         {
-            url: 'images/products/product-details3.jpg'
+            url: 'images/products/product-details1.jpg'
         },
         {
-            url: 'images/products/product-details4.jpg'
+            url: 'images/products/product-details1.jpg'
         }
     ]
     selectedImage: string;

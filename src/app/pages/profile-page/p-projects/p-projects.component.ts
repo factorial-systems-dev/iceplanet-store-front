@@ -468,7 +468,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     },
     {
         id: '#547',
-        projectName: 'Product development',
+        projectName: 'ProductModel development',
         startDate: '14 Nov, 2024',
         endDate: '14 Dec, 2024',
         projectManager: 'Kimberly Anderson',
