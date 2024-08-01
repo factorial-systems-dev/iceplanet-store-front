@@ -49,7 +49,6 @@
                 </div>
             </mat-card-content>
         </mat-card>
-
     </div>
 
     <div class="col-md-8 col-lg-9" *ngIf="(products$ | async) as products">
@@ -62,7 +61,7 @@
                             <a [routerLink]="['/shop/product-details', product._id]" class="d-block border-radius">
                                 <img [src]="'/images/products/product1.jpg'" class="border-radius transition" alt="product-image">
                             </a>
-                            <button mat-fab (click)="addToCart($event)">
+                            <button mat-mini-fab (click)="addToCart($event, product._id)">
                                 <i class="ri-shopping-cart-2-line"></i>
                             </button>
                         </div>
@@ -77,6 +76,8 @@
                                     {{ product.bundles[0].price | currency: "₦":"symbol":"1.0-0" }}
                                 </span>
                             </div>
+
+                            <input type="hidden" [id]="product._id + '-hidden'" [value]="product.bundles[0]._id">
 
                             <mat-form-field>
                                 <mat-label>Bundle</mat-label>

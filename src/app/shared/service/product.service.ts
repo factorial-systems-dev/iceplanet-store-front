@@ -1,10 +1,9 @@
 import {environment} from "../../../environments/environment";
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Category, Products} from "../model/product.model";
+import {Category, Product, Products} from "../model/product.model";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {ActivatedRoute, Router} from "@angular/router";
 
 const PRODUCT_URL = environment.base_url + '/product';
 
@@ -14,7 +13,7 @@ const PRODUCT_URL = environment.base_url + '/product';
 export class ProductService {
     private categories: string[]  = [];
 
-    constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {}
+    constructor(private http: HttpClient) {}
 
     public getProducts(page: number = 1, size: number = 20,
                        sort = 'ascending'): Observable<Products> {
@@ -23,6 +22,12 @@ export class ProductService {
         return this.http.get<Products>(PRODUCT_URL, {
             params
         });
+    }
+
+    public getProductById(id: string): Observable<Product> {
+        return this.http.get<{product: Product}>(`${PRODUCT_URL}/${id}`).pipe(
+            map(p => p.product)
+        );
     }
 
     public addCategoryToProduct(category: string):Observable<Products> {

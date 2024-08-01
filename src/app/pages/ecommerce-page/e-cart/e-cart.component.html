@@ -20,7 +20,7 @@
 </div>
 
 <!-- Cart -->
-<div class="row">
+<div class="row" *ngIf="cartService.cart$ | async as cart; else loading">
     <div class="col-lg-8">
         <mat-card
             class="daxa-card cart-card mb-25 border-radius bg-white border-none d-block"
@@ -33,155 +33,60 @@
                         Your Order
                     </h5>
                 </mat-card-title>
-                <mat-card-subtitle>
-                    <h5 class="mb-0">
-                        Customer ID : 357951
-                    </h5>
-                </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <div class="recent-orders-table table-responsive">
                     <table>
                         <thead>
-                            <tr>
-                                <th scope="col" class="fw-medium text-black">
-                                    Order ID
-                                </th>
-                                <th scope="col" class="fw-medium text-black">
-                                    Product
-                                </th>
-                                <th scope="col" class="fw-medium text-black">
-                                    Quantity
-                                </th>
-                                <th scope="col" class="fw-medium text-black">
-                                    Price
-                                </th>
-                                <th scope="col" class="fw-medium text-black">
-                                    Total
-                                </th>
-                            </tr>
+                        <tr>
+                            <th scope="col" class="fw-medium text-black">
+                                Product
+                            </th>
+                            <th scope="col" class="fw-medium text-black">
+                                Unit
+                            </th>
+                            <th scope="col" class="fw-medium text-black">
+                                Quantity
+                            </th>
+                            <th scope="col" class="fw-medium text-black">
+                                Price
+                            </th>
+                            <th scope="col" class="fw-medium text-black">
+                                Total
+                            </th>
+                        </tr>
                         </thead>
+
                         <tbody>
-                            <tr>
-                                <td class="text-body">
-                                    #ARP-1217
-                                </td>
-                                <td class="text-body">
-                                    <div class="info d-flex align-items-center">
-                                        <div class="image">
-                                            <img src="images/products/product6.png" alt="product-image">
-                                        </div>
-                                        <a routerLink="/ecommerce-page/product-details" class="d-block fw-medium">
-                                            Hand Watch
-                                        </a>
+                        <tr *ngFor="let item of (cart.items)">
+                            <td class="text-body">
+                                <div class="info d-flex align-items-center">
+                                    <div class="image">
+                                        <img src="images/products/product6.png" alt="product-image">
                                     </div>
-                                </td>
-                                <td class="text-body">
-                                    <app-quantity-counter [initialValue]="1" />
-                                </td>
-                                <td class="text-body">
-                                    $80.00
-                                </td>
-                                <td class="text-body">
-                                    $80.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    #ARP-1423
-                                </td>
-                                <td class="text-body">
-                                    <div class="info d-flex align-items-center">
-                                        <div class="image">
-                                            <img src="images/products/product8.png" alt="product-image">
-                                        </div>
-                                        <a routerLink="/ecommerce-page/product-details" class="d-block fw-medium">
-                                            Sports Shoes
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-body">
-                                    <app-quantity-counter [initialValue]="3" />
-                                </td>
-                                <td class="text-body">
-                                    $150.00
-                                </td>
-                                <td class="text-body">
-                                    $450.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    #ARP-4312
-                                </td>
-                                <td class="text-body">
-                                    <div class="info d-flex align-items-center">
-                                        <div class="image">
-                                            <img src="images/products/product3.png" alt="product-image">
-                                        </div>
-                                        <a routerLink="/ecommerce-page/product-details" class="d-block fw-medium">
-                                            Gaming Laptop
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-body">
-                                    <app-quantity-counter [initialValue]="1" />
-                                </td>
-                                <td class="text-body">
-                                    $750.00
-                                </td>
-                                <td class="text-body">
-                                    $750.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    #ARP-3124
-                                </td>
-                                <td class="text-body">
-                                    <div class="info d-flex align-items-center">
-                                        <div class="image">
-                                            <img src="images/products/product9.png" alt="product-image">
-                                        </div>
-                                        <a routerLink="/ecommerce-page/product-details" class="d-block fw-medium">
-                                            Woman Handbag
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-body">
-                                    <app-quantity-counter [initialValue]="5" />
-                                </td>
-                                <td class="text-body">
-                                    $15.00
-                                </td>
-                                <td class="text-body">
-                                    $75.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    #ARP-1234
-                                </td>
-                                <td class="text-body">
-                                    <div class="info d-flex align-items-center">
-                                        <div class="image">
-                                            <img src="images/products/product10.png" alt="product-image">
-                                        </div>
-                                        <a routerLink="/ecommerce-page/product-details" class="d-block fw-medium">
-                                            Luxury Rendering
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-body">
-                                    <app-quantity-counter [initialValue]="2" />
-                                </td>
-                                <td class="text-body">
-                                    $25.00
-                                </td>
-                                <td class="text-body">
-                                    $50.00
-                                </td>
-                            </tr>
+                                    <a [routerLink]="['/shop/product-details', item.product]"
+                                       class="d-block fw-medium">
+                                        {{ item.name }}
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="text-body">
+                                {{ item.unit }}
+                            </td>
+                            <td class="text-body">
+                                <app-quantity-counter
+                                    [initialValue]="item.quantity"
+                                    [productId]="item.product"
+                                    [bundleId]="item.bundle"
+                                />
+                            </td>
+                            <td class="text-body">
+                                {{ item.price | currency: "₦":"symbol":"1.0-0" }}
+                            </td>
+                            <td class="text-body">
+                                {{ item.price * item.quantity| currency: "₦":"symbol":"1.0-0" }}
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -205,86 +110,73 @@
                 <div class="order-summary-table table-responsive">
                     <table>
                         <thead>
-                            <tr>
-                                <th scope="col" class="fw-medium text-black">
-                                    Description
-                                </th>
-                                <th scope="col" class="fw-medium text-black">
-                                    Price
-                                </th>
-                            </tr>
+                        <tr>
+                            <th scope="col" class="fw-medium text-black">
+                                Description
+                            </th>
+                            <th scope="col" class="fw-medium text-black">
+                                Price
+                            </th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="text-body">
-                                    Grand Total :
-                                </td>
-                                <td class="text-body">
-                                    $1,105.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    Discount :
-                                </td>
-                                <td class="text-body">
-                                    -$105.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    Tax :
-                                </td>
-                                <td class="text-body">
-                                    $75.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-black">
-                                    Subtotal :
-                                </td>
-                                <td class="text-body">
-                                    $1,000.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-body">
-                                    Shipping Charge :
-                                </td>
-                                <td class="text-body">
-                                    $80.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-black">
-                                    Total :
-                                </td>
-                                <td class="text-body">
-                                    $900.00
-                                </td>
-                            </tr>
+                        <tr>
+                            <td class="text-body">
+                                Subtotal :
+                            </td>
+                            <td class="text-body">
+                                {{ cart.subtotal | currency: "₦":"symbol":"1.0-0" }}
+                            </td>
+                        </tr>
+                        <tr *ngIf="(authService.user$ | async)">
+                            <td class="text-body">
+                                Shipping Charge :
+                            </td>
+                            <td class="text-body">
+                                {{ cart.deliveryPrice |  currency: "₦":"symbol":"1.0-0" }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-black">
+                                Grand Total :
+                            </td>
+                            <td class="text-body">
+                                {{ cart.grandTotal| currency: "₦":"symbol":"1.0-0" }}
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
-                <mat-form-field>
+                <mat-form-field *ngIf="(authService.user$ | async)" class="cart-card">
                     <mat-label>Delivery</mat-label>
-                    <mat-select>
-                        @for (destination of destinations; track destination) {
-                            <mat-option [value]="destination.value">{{destination.name}}</mat-option>
+                    <mat-select (selectionChange)="onChange($event)">
+                        @for (zone of (deliveryService.zones$ | async); track zone) {
+                            <mat-option [value]="zone.id">{{ zone.name }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
+                <div style="margin-bottom: 10px">
+                </div>
+                <mat-form-field class="cart-card">
+                    <mat-checkbox class="info" (change)="onCheckBoxChange($event)">
+                        Cut
+                        <input matInput>
+                    </mat-checkbox>
+                </mat-form-field>
+
                 <h5>
                     Add A Note
                 </h5>
-                <form>
+
+                <form [formGroup]="orderForm" (ngSubmit)="onSubmit(orderForm)">
                     <mat-form-field class="textarea">
                         <mat-label>
                             Write here....
                         </mat-label>
-                        <textarea matInput placeholder="E.g. It makes me feel..."></textarea>
+                        <textarea matInput formControlName="instruction" placeholder="Extra Instructions..."></textarea>
                     </mat-form-field>
-                    <button mat-button (click)="onCheckout()">
+
+                    <button mat-button type="submit" *ngIf="cartService.count$ | async">
                         Proceed To Checkout
                     </button>
                 </form>
@@ -292,3 +184,7 @@
         </mat-card>
     </div>
 </div>
+
+<ng-template #loading>
+    Loading Please Wait...
+</ng-template>

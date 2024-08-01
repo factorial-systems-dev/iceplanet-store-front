@@ -60,7 +60,7 @@ const UPDATE_URL = environment.base_url + '/api/v1/users';
 export class AuthService {
     private subject = new BehaviorSubject<User | null>(null);
     public user$ = this.subject.asObservable();
-    private user: User;
+    public user: User;
 
     // public isLoggedIn = false;
     // public userId = 0;
@@ -119,8 +119,6 @@ export class AuthService {
         const decoded: CustomJwtDecoded = jwtDecode(responseData.access_token);
         const dt = new Date();
         dt.setHours(dt.getHours() + 1);
-
-        console.log('Response Data: ', responseData);
 
         const user =
             new User(

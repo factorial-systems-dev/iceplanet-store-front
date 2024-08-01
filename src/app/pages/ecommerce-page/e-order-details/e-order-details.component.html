@@ -23,7 +23,7 @@
 </div>
 
 <!-- Order Details -->
-<div class="row">
+<div class="row" *ngIf="order$ | async as o">
     <div class="col-lg-8">
         <mat-card
             class="daxa-card tracking-id-card mb-25 border-radius bg-white border-none d-block bg-gradient"
@@ -31,7 +31,7 @@
         >
             <mat-card-content>
                 <span class="d-block fw-medium text-white">
-                    Tracking ID: 000346798254
+                    Order ID: {{ o._id }}
                 </span>
                 <div class="numbers position-relative d-sm-flex align-items-center justify-content-between">
                     <div class="box">
@@ -39,7 +39,7 @@
                             01
                         </div>
                         <span class="fw-medium d-block text-white">
-                            Order Placed
+                            Order Pending
                         </span>
                     </div>
                     <div class="box">
@@ -47,7 +47,7 @@
                             02
                         </div>
                         <span class="fw-medium d-block text-white">
-                            Packed
+                            Paid
                         </span>
                     </div>
                     <div class="box active">
@@ -76,74 +76,53 @@
             <mat-card-header>
                 <mat-card-title>
                     <h5 class="mb-0">
-                        Recent Orders
+                        OrderItems
                     </h5>
                 </mat-card-title>
-                <mat-card-subtitle>
-                    <h5 class="mb-0">
-                        Customer ID : 357951
-                    </h5>
-                </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <div class="recent-orders-table">
                     <div class="table-responsive">
                         <table mat-table [dataSource]="dataSource">
 
-                            <!-- Order ID Column -->
-                            <ng-container matColumnDef="orderID">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Order ID
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.orderID}}
-                                </td>
-                            </ng-container>
 
-                            <!-- ProductModel Column -->
+                            <!-- Product Column -->
                             <ng-container matColumnDef="product">
                                 <th mat-header-cell *matHeaderCellDef>
-                                    ProductModel
+                                    Product
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    <div class="info d-flex align-items-center">
-                                        <div class="image">
-                                            <img [src]="element.product.img" alt="product-image">
-                                        </div>
-                                        <a routerLink="/ecommerce-page/product-details" class="d-block fw-medium">
-                                            {{element.product.name}}
-                                        </a>
-                                    </div>
+                                    {{ element.name }}
                                 </td>
                             </ng-container>
 
-                            <!-- Items Column -->
-                            <ng-container matColumnDef="items">
+                            <!-- Unit Column -->
+                            <ng-container matColumnDef="unit">
                                 <th mat-header-cell *matHeaderCellDef>
-                                    Items
+                                    Unit
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.items}}
+                                    {{ element.unit }}
                                 </td>
                             </ng-container>
 
-                            <!-- Price Column -->
-                            <ng-container matColumnDef="price">
-                                <th mat-header-cell *matHeaderCellDef>
-                                    Price
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.price}}
-                                </td>
-                            </ng-container>
-
-                            <!-- Total Column -->
-                            <ng-container matColumnDef="total">
+                            <!-- Quantity Column -->
+                            <ng-container matColumnDef="quantity">
                                 <th mat-header-cell *matHeaderCellDef>
                                     Total
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.total}}
+                                    {{ element.quantity }}
+                                </td>
+                            </ng-container>
+
+                            <!-- Total Column -->
+                            <ng-container matColumnDef="price">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    Total
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{ element.total | currency: "₦":"symbol":"1.0-0"}}
                                 </td>
                             </ng-container>
 
@@ -174,72 +153,57 @@
                     <div class="table-responsive">
                         <table>
                             <thead>
-                                <tr>
-                                    <th scope="col" class="fw-medium text-black">
-                                        Description
-                                    </th>
-                                    <th scope="col" class="fw-medium text-black">
-                                        Price
-                                    </th>
-                                </tr>
+                            <tr>
+                                <th scope="col" class="fw-medium text-black">
+                                    Description
+                                </th>
+                                <th scope="col" class="fw-medium text-black">
+                                    Price
+                                </th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-body">
-                                        Grand Total :
-                                    </td>
-                                    <td class="text-body">
-                                        $1,105.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-body">
-                                        Discount :
-                                    </td>
-                                    <td class="text-body">
-                                        -$105.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-body">
-                                        Tax :
-                                    </td>
-                                    <td class="text-body">
-                                        $75.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-black">
-                                        Subtotal :
-                                    </td>
-                                    <td class="text-body">
-                                        $1,000.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-body">
-                                        Shipping Charge :
-                                    </td>
-                                    <td class="text-body">
-                                        $80.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-body">
-                                        Coupon Charge :
-                                    </td>
-                                    <td class="text-body">
-                                        $20.00
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-black">
-                                        Total :
-                                    </td>
-                                    <td class="text-body">
-                                        $900.00
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td class="text-body">
+                                    Total :
+                                </td>
+                                <td class="text-body">
+                                    {{ o.subtotal - o.discount | currency: "₦":"symbol":"1.0-0"}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-body">
+                                    Discount :
+                                </td>
+                                <td class="text-body">
+                                   {{o.discount | currency: "₦":"symbol":"1.0-0"}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-black">
+                                    Subtotal :
+                                </td>
+                                <td class="text-body">
+                                    {{o.subtotal | currency: "₦":"symbol":"1.0-0"}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-body">
+                                    Delivery Charge :
+                                </td>
+                                <td class="text-body">
+                                   {{o.deliveryPrice | currency: "₦":"symbol":"1.0-0"}}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-black">
+                                    Grand-Total :
+                                </td>
+                                <td class="text-body">
+                                   {{o.grandTotal | currency: "₦":"symbol":"1.0-0"}}
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -262,85 +226,33 @@
                         </div>
                     </div>
                     <span class="d-block text-body">
-                        $900.00
+                        {{o.grandTotal | currency: "₦":"symbol":"1.0-0"}}
                     </span>
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-    <div class="col-lg-4 col-md-6">
+    <div class="col-lg-4 col-md-6" *ngIf="o.delivery">
         <mat-card
             class="daxa-card order-details-card mb-25 border-radius bg-white border-none d-block"
             [class.rtl-enabled]="themeService.isRTLEnabled()"
         >
             <mat-card-content>
                 <h5>
-                    Billing Details
+                    Delivery Details
                 </h5>
                 <ul class="pl-0 mb-0 mt-0 list-unstyled">
                     <li class="text-body">
-                        <span class="text-black">Name:</span> Gary Fraser
+                        <span class="text-black">Shipping Date:</span> {{ o.date | date: "dd/MM/yyyy" }}
                     </li>
                     <li class="text-body">
-                        <span class="text-black">Email:</span> example&#64;daxa.com
+                        <span class="text-black">Email:</span> {{o.user?.email}}
                     </li>
                     <li class="text-body">
-                        <span class="text-black">Phone:</span> +1 444 333 5566
+                        <span class="text-black">Phone:</span> {{o.user?.telephoneNumber}}
                     </li>
                     <li class="text-body">
-                        <span class="text-black">Address:</span> 715 Maple St, Hamletville, England
-                    </li>
-                </ul>
-            </mat-card-content>
-        </mat-card>
-    </div>
-    <div class="col-lg-4 col-md-6">
-        <mat-card
-            class="daxa-card order-details-card mb-25 border-radius bg-white border-none d-block"
-            [class.rtl-enabled]="themeService.isRTLEnabled()"
-        >
-            <mat-card-content>
-                <h5>
-                    Shipping Details
-                </h5>
-                <ul class="pl-0 mb-0 mt-0 list-unstyled">
-                    <li class="text-body">
-                        <span class="text-black">Shipping Date:</span> Nov 25, 2024 10:30 AM
-                    </li>
-                    <li class="text-body">
-                        <span class="text-black">Email:</span> example&#64;daxa.com
-                    </li>
-                    <li class="text-body">
-                        <span class="text-black">Phone:</span> +1 444 333 5566
-                    </li>
-                    <li class="text-body">
-                        <span class="text-black">Address:</span> 789 Pine St, Villageton, England
-                    </li>
-                </ul>
-            </mat-card-content>
-        </mat-card>
-    </div>
-    <div class="col-lg-4 col-md-6">
-        <mat-card
-            class="daxa-card order-details-card mb-25 border-radius bg-white border-none d-block"
-            [class.rtl-enabled]="themeService.isRTLEnabled()"
-        >
-            <mat-card-content>
-                <h5>
-                    Delivery Informatin
-                </h5>
-                <ul class="pl-0 mb-0 mt-0 list-unstyled">
-                    <li class="text-body">
-                        <span class="text-black">XYZ Delivery</span>
-                    </li>
-                    <li class="text-body">
-                        <span class="text-black">Order ID:</span> XXXXXX1004
-                    </li>
-                    <li class="text-body">
-                        <span class="text-black">Payment Method:</span> Master Card
-                    </li>
-                    <li class="text-body">
-                        <span class="text-black">Email:</span> example&#64;daxa.com
+                        <span class="text-black">Address:</span> {{o.deliveryAddress}}
                     </li>
                 </ul>
             </mat-card-content>

@@ -1,27 +1,39 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
+import {OrderService} from "../../../shared/service/order.service";
+import {Order, OrderItem} from "../../../shared/model/order.model";
+import {BehaviorSubject, Subscription} from "rxjs";
+import {AsyncPipe, CurrencyPipe, DatePipe, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-e-order-details',
     standalone: true,
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule],
+    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, AsyncPipe, NgIf, CurrencyPipe, DatePipe],
     templateUrl: './e-order-details.component.html',
     styleUrl: './e-order-details.component.scss'
 })
-export class EOrderDetailsComponent {
+export class EOrderDetailsComponent implements OnInit, OnDestroy {
+    private id: string;
+    private subscription: Subscription;
 
-    displayedColumns: string[] = ['orderID', 'product', 'items', 'price', 'total'];
-    dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+    // @ts-ignore
+    private orderSubject = new BehaviorSubject<Order>(null);
+    public order$ = this.orderSubject.asObservable();
+
+    displayedColumns: string[] = ['product', 'unit', 'quantity', 'price'];
+    dataSource: MatTableDataSource<OrderItem>;
 
     // isToggled
     isToggled = false;
 
     constructor(
+        private route: ActivatedRoute,
+        private orderService: OrderService,
         public themeService: CustomizerSettingsService
     ) {
         this.themeService.isToggled$.subscribe(isToggled => {
@@ -29,65 +41,16 @@ export class EOrderDetailsComponent {
         });
     }
 
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-    {
-        orderID: ' #ARP-1217',
-        product: {
-            img: 'images/products/product6.png',
-            name: 'Hand Watch'
-        },
-        items: 1,
-        price: '$80.00',
-        total: '$80.00'
-    },
-    {
-        orderID: ' #ARP-1423',
-        product: {
-            img: 'images/products/product1.png',
-            name: 'Gaming Laptop'
-        },
-        items: 3,
-        price: '$150.00',
-        total: '$450.00'
-    },
-    {
-        orderID: ' #ARP-4312',
-        product: {
-            img: 'images/products/product6.png',
-            name: 'Sports Shoes'
-        },
-        items: 1,
-        price: '$750.00',
-        total: '$750.00'
-    },
-    {
-        orderID: ' #ARP-3124',
-        product: {
-            img: 'images/products/product6.png',
-            name: 'Woman Handbag'
-        },
-        items: 5,
-        price: '$15.00',
-        total: '$75.00'
-    },
-    {
-        orderID: ' #ARP-1234',
-        product: {
-            img: 'images/products/product6.png',
-            name: 'Luxury Rendering'
-        },
-        items: 2,
-        price: '$25.00',
-        total: '$50.00'
+    ngOnInit(): void {
+        this.id = <string>this.route.snapshot.paramMap.get('id');
+        this.subscription = this.orderService.getOrderById(this.id).subscribe(o => {
+            this.dataSource = new MatTableDataSource(o.items);
+            this.orderSubject.next(o);
+        });
     }
-];
 
-export interface PeriodicElement {
-    orderID: string;
-    product: any;
-    items: number;
-    price: string;
-    total: string;
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+        this.orderSubject.complete();
+    }
 }

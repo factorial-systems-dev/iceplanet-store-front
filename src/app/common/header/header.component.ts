@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {provideRouter, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
 import {AuthService} from "../../authentication/auth.service";
+import {CartService} from "../../shared/service/cart.service";
 
 @Component({
     selector: 'app-header',
@@ -24,6 +25,7 @@ export class HeaderComponent {
 
     constructor(
         private router: Router,
+        public cartService: CartService,
         public authService: AuthService,
         private toggleService: ToggleService,
         public themeService: CustomizerSettingsService

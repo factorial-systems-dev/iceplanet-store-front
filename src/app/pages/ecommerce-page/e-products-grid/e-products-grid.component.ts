@@ -21,6 +21,7 @@ import {
 import {ProductService} from "../../../shared/service/product.service";
 import {Products} from "../../../shared/model/product.model";
 import {map, tap} from "rxjs/operators";
+import {CartService} from "../../../shared/service/cart.service";
 
 @Component({
     selector: 'app-e-products-grid',
@@ -41,8 +42,9 @@ export class EProductsGridComponent implements OnInit, OnDestroy, AfterViewInit 
     // isToggled
     isToggled = false;
 
-    constructor( private productService: ProductService,
-                 public themeService: CustomizerSettingsService) {
+    constructor(private productService: ProductService,
+                private cartService: CartService,
+                public themeService: CustomizerSettingsService) {
         this.themeService.isToggled$.subscribe(isToggled => {
             this.isToggled = isToggled;
         });
@@ -98,15 +100,20 @@ export class EProductsGridComponent implements OnInit, OnDestroy, AfterViewInit 
         }
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+    }
 
-    addToCart($event: MouseEvent) {
-        console.log('Add to Cart', $event);
+    addToCart($event: MouseEvent, id: string) {
+        // @ts-ignore
+        const bundleId = document.getElementById(id + '-hidden').value;
+        this.cartService.addItem(id,  bundleId);
     }
 
     onSelectChange($event: MatSelectChange, _id: string) {
         // @ts-ignore
         const element: HTMLSpanElement = document.getElementById(_id);
+        // @ts-ignore
+        const innerHidden: HTMLInputElement = document.getElementById(_id + '-hidden');
 
         this.products$.pipe(
             map(p => {
@@ -114,13 +121,14 @@ export class EProductsGridComponent implements OnInit, OnDestroy, AfterViewInit 
                 if (product) {
                     const bundle = product.bundles.find(b => b._id === $event.value);
                     if (bundle) {
-                        return bundle.price;
+                        return bundle;
                     }
                 }
-                return 0;
+                return {_id: 0, price: 0};
             })
         ).subscribe(b => {
-            element.innerText = `₦${new Intl.NumberFormat().format(b)}`;
+            element.innerText = `₦${new Intl.NumberFormat().format(b.price)}`;
+            innerHidden.value = <string>b._id;
         });
     }
 

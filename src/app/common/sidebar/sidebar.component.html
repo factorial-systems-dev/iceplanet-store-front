@@ -43,7 +43,7 @@
                             Shop
                         </span>
                     </a>
-                    <a *ngIf="(authService.user$ | async)" routerLink="/orders" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a *ngIf="(authService.user$ | async)" routerLink="/order/orders" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <i class="material-symbols-outlined">
                             orders
                         </i>

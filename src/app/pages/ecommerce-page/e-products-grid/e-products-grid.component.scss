@@ -391,11 +391,11 @@
                         &:focus {
                             color: var(--warningColor);
 
-                            i {
-                                &::before {
-                                    content: "\ee0e";
-                                }
-                            }
+                            //i {
+                            //    &::before {
+                            //        content: "\ee0e";
+                            //    }
+                            //}
                         }
                     }
                 }
