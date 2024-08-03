@@ -24,6 +24,10 @@ export class ProductService {
         });
     }
 
+    public getTopSellingProducts(): Observable<Products> {
+        return this.http.get<Products>(`${PRODUCT_URL}/topselling`);
+    }
+
     public getProductById(id: string): Observable<Product> {
         return this.http.get<{product: Product}>(`${PRODUCT_URL}/${id}`).pipe(
             map(p => p.product)

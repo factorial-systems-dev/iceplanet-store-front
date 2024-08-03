@@ -1,5 +1,5 @@
 <!-- Breadcrumb -->
-<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between" *ngIf="standalone">
     <h5 class="mb-0">
         Orders
     </h5>
@@ -17,6 +17,12 @@
             Orders
         </li>
     </ol>
+</div>
+
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between" *ngIf="!standalone">
+    <h5 class="mb-0">
+        Recent Orders
+    </h5>
 </div>
 
 <!-- Orders -->

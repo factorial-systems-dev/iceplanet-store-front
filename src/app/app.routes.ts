@@ -34,9 +34,7 @@ import { FaqPageComponent } from './pages/faq-page/faq-page.component';
 import { InvoiceDetailsComponent } from './pages/invoices-page/invoice-details/invoice-details.component';
 import { InvoicesComponent } from './pages/invoices-page/invoices/invoices.component';
 import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.component';
-import { ECheckoutComponent } from './pages/ecommerce-page/e-checkout/e-checkout.component';
 import { ECartComponent } from './pages/ecommerce-page/e-cart/e-cart.component';
-import { EOrderTrackingComponent } from './pages/ecommerce-page/e-order-tracking/e-order-tracking.component';
 import { EOrderDetailsComponent } from './pages/ecommerce-page/e-order-details/e-order-details.component';
 import { EOrdersComponent } from './pages/ecommerce-page/e-orders/e-orders.component';
 import { EProductDetailsComponent } from './pages/ecommerce-page/e-product-details/e-product-details.component';
@@ -49,9 +47,7 @@ export const routes: Routes = [
     {path: 'dashboard', component: EcommerceComponent, canActivate: [AuthGuard]},
     {path: 'order/orders', component: EOrdersComponent, canActivate: [AuthGuard]},
     {path: 'order/order-details/:id', component: EOrderDetailsComponent, canActivate: [AuthGuard]},
-    {path: 'order/order-tracking/:id', component: EOrderTrackingComponent, canActivate: [AuthGuard]},
     {path: 'cart', component: ECartComponent},
-    {path: 'checkout', component: ECheckoutComponent},
     {
         path: 'invoices',
         component: InvoicesPageComponent,

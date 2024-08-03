@@ -30,3 +30,9 @@ export interface Order {
     }
     items: OrderItem[];
 }
+
+export interface OrderStatistics {
+    _id: string;
+    count: number;
+    total: number;
+}

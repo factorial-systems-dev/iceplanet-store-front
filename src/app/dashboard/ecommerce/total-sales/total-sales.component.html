@@ -2,7 +2,7 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mb-0">
-                Total Sales
+                Total Orders
             </h5>
         </mat-card-title>
         <mat-card-subtitle>
@@ -23,19 +23,10 @@
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <apx-chart
+        <apx-chart *ngIf="chartOptions"
             [series]="chartOptions.series!"
             [chart]="chartOptions.chart!"
-            [dataLabels]="chartOptions.dataLabels!"
-            [markers]="chartOptions.markers!"
-            [xaxis]="chartOptions.xaxis!"
-            [yaxis]="chartOptions.yaxis!"
-            [stroke]="chartOptions.stroke!"
-            [colors]="chartOptions.colors!"
-            [grid]="chartOptions.grid!"
-            [fill]="chartOptions.fill!"
-            [forecastDataPoints]="chartOptions.forecastDataPoints!"
-            [legend]="chartOptions.legend!"
-        ></apx-chart>
+            [xaxis]="chartOptions.xaxis!">
+        </apx-chart>
     </mat-card-content>
 </mat-card>

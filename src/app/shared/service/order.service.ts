@@ -1,17 +1,42 @@
 import {Injectable} from "@angular/core";
 import {CartService} from "./cart.service";
-import {Order} from "../model/order.model";
+import {Order, OrderStatistics} from "../model/order.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {AuthService} from "../../authentication/auth.service";
 import {PaystackCharge} from "../model/payment.model";
 import {SnackbarService} from "./snackbar.service";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Observable, pipe} from "rxjs";
+import {map, tap} from "rxjs/operators";
 
 const ORDER_URL = environment.base_url + '/order';
 const PAYMENT_URL = environment.base_url + '/payment';
 const DEFAULT_EMAIL: string = 'user@factorialsystem.io';
+const Months: string[] = [
+    'Jan', 'Feb', 'Mar',
+    'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep',
+    'Oct', 'Nov', 'Dec'
+];
+const data_points_array = [
+    {x: 'Jan', y: 0},
+    {x: 'Feb', y: 0},
+    {x: 'Mar', y: 0},
+    {x: 'Apr', y: 0},
+    {x: 'May', y: 0},
+    {x: 'Jun', y: 0},
+    {x: 'Jul', y: 0},
+    {x: 'Aug', y: 0},
+    {x: 'Sep', y: 0},
+    {x: 'Oct', y: 0},
+    {x: 'Nov', y: 0},
+    {x: 'Dec', y: 0}
+];
+
+const data_points = [
+    0,0,0,0,0,0,0,0,0,0,0,0
+]
+
 
 @Injectable({
     providedIn: 'root'
@@ -91,11 +116,39 @@ export class OrderService {
         });
     }
 
+    getOrderStatistics(): Observable<OrderStatistics>  {
+        return this.http.get<{aggregate:OrderStatistics[]}>(`${ORDER_URL}/aggregates/count`).pipe(
+            map(o => o.aggregate[0])
+        );
+    }
+
+    getOrderMonthly(year: string): Observable<number[]> {
+        return this.http.get<{ aggregate: OrderStatistics[] }>(`${ORDER_URL}/aggregates/monthly`, {
+            params: {
+                year: year
+            }
+        }).pipe (
+            tap(ot => {
+                ot.aggregate.forEach((value, index) => {
+                    data_points[parseInt(value._id)] =  value.total;
+                });
+            }),
+            map(o => data_points)
+        );
+    }
+
+    getOrderStatuses(): Observable<{_id: string,  count: number}[]> {
+        return this.http.get<{aggregate:{_id: string,  count: number}[]}>(`${ORDER_URL}/aggregates/status`)
+            .pipe(
+                map(a => a.aggregate)
+            );
+    }
+
     initPayment(amount: number, id: string) {
         // @ts-ignore
         const paystack = new PaystackPop();
         paystack.newTransaction({
-            key: 'pk_test_94dbaebf2467e2b41e3552f23a093e7e55cbe57e',
+            key: environment.paystack_key,
             email: this.authService.user ? this.authService.user.email : DEFAULT_EMAIL,
             amount: amount * 100,
             onSuccess: (transaction: PaystackCharge) => {

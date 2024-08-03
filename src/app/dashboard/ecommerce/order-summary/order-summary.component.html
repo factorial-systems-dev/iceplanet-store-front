@@ -26,18 +26,7 @@
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <div class="info d-flex align-items-center justify-content-between">
-            <span class="d-block">
-                Completed 60%
-            </span>
-            <span class="d-block">
-                New Order 30%
-            </span>
-            <span class="d-block">
-                Pending 10%
-            </span>
-        </div>
-        <apx-chart
+        <apx-chart *ngIf="chartOptions"
             [series]="chartOptions.series!"
             [chart]="chartOptions.chart!"
             [legend]="chartOptions.legend!"

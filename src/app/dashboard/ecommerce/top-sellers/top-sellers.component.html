@@ -6,7 +6,7 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mb-0">
-                Top Sellers
+                Top Selling Products
             </h5>
         </mat-card-title>
         <mat-card-subtitle>
@@ -30,13 +30,13 @@
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <div class="top-sellers-table">
+        <div class="top-sellers-table" *ngIf="(products$ | async) as products">
             <div class="table-responsive">
                 <table>
                     <tbody>
-                        <tr>
+                        <tr *ngFor="let product of products.products; let i = index">
                             <td class="text-body fw-medium">
-                                01.
+                                {{ i + 1 }}.
                             </td>
                             <td>
                                 <div class="info d-flex align-items-center">
@@ -45,10 +45,10 @@
                                     </div>
                                     <div>
                                         <h6 class="fw-normal">
-                                            Mark Stjohn
+                                           {{product.name}}
                                         </h6>
                                         <span class="d-block text-body">
-                                            Customer ID #76431
+                                            {{product.category}}
                                         </span>
                                     </div>
                                 </div>
@@ -61,156 +61,6 @@
                                     <i class="ri-star-fill"></i>
                                     <i class="ri-star-fill"></i>
                                     (5)
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-body fw-medium">
-                                02.
-                            </td>
-                            <td>
-                                <div class="info d-flex align-items-center">
-                                    <div class="image">
-                                        <img src="images/users/user7.jpg" alt="user-image">
-                                    </div>
-                                    <div>
-                                        <h6 class="fw-normal">
-                                            Joan Stanley
-                                        </h6>
-                                        <span class="d-block text-body">
-                                            Customer ID #64815
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="rating d-flex align-items-center text-body justify-content-end">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-half-fill"></i>
-                                    (4.5)
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-body fw-medium">
-                                03.
-                            </td>
-                            <td>
-                                <div class="info d-flex align-items-center">
-                                    <div class="image">
-                                        <img src="images/users/user8.jpg" alt="user-image">
-                                    </div>
-                                    <div>
-                                        <h6 class="fw-normal">
-                                            Jacob Bell
-                                        </h6>
-                                        <span class="d-block text-body">
-                                            Customer ID #34581
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="rating d-flex align-items-center text-body justify-content-end">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-line"></i>
-                                    (4)
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-body fw-medium">
-                                04.
-                            </td>
-                            <td>
-                                <div class="info d-flex align-items-center">
-                                    <div class="image">
-                                        <img src="images/users/user9.jpg" alt="user-image">
-                                    </div>
-                                    <div>
-                                        <h6 class="fw-normal">
-                                            Donald Bryan
-                                        </h6>
-                                        <span class="d-block text-body">
-                                            Customer ID #67941
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="rating d-flex align-items-center text-body justify-content-end">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    (5)
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-body fw-medium">
-                                05.
-                            </td>
-                            <td>
-                                <div class="info d-flex align-items-center">
-                                    <div class="image">
-                                        <img src="images/users/user10.jpg" alt="user-image">
-                                    </div>
-                                    <div>
-                                        <h6 class="fw-normal">
-                                            Kristina Blomquist
-                                        </h6>
-                                        <span class="d-block text-body">
-                                            Customer ID #36985
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="rating d-flex align-items-center text-body justify-content-end">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    (5)
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-body fw-medium">
-                                06.
-                            </td>
-                            <td>
-                                <div class="info d-flex align-items-center">
-                                    <div class="image">
-                                        <img src="images/users/user11.jpg" alt="user-image">
-                                    </div>
-                                    <div>
-                                        <h6 class="fw-normal">
-                                            Jeffrey Morrison
-                                        </h6>
-                                        <span class="d-block text-body">
-                                            Customer ID #26985
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="rating d-flex align-items-center text-body justify-content-end">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-half-fill"></i>
-                                    <i class="ri-star-line"></i>
-                                    (3.5)
                                 </div>
                             </td>
                         </tr>

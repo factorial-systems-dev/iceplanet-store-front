@@ -3,10 +3,10 @@
         <div class="d-flex justify-content-between">
             <div class="title">
                 <h5>
-                    Total Revenue
+                    Total Expenditure
                 </h5>
-                <div class="number fw-medium lh-1">
-                    $15,278
+                <div class="number fw-medium lh-1" *ngIf="statistics$ | async as statistics">
+                    {{statistics.total | currency: "₦":"symbol":"1.0-0"}}
                 </div>
             </div>
             <div class="icon text-center bg-warning rounded-circle text-white position-relative">

@@ -1,12 +1,11 @@
 import {AsyncPipe, CurrencyPipe, DatePipe, NgIf} from '@angular/common';
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
@@ -27,7 +26,8 @@ export class EOrdersComponent implements OnInit, AfterViewInit{
     subscription: Subscription;
     displayedColumns: string[] = ['Id', 'price', 'date', 'status'];
     dataSource = new OrderDatasource(this.orderService);
-    // selection = new SelectionModel<Order>(true, []);
+
+    @Input() standalone = true;
 
     constructor(public themeService: CustomizerSettingsService, private orderService: OrderService) {
         this.themeService.isToggled$.subscribe(isToggled => {

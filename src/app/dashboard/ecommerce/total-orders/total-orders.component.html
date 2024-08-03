@@ -5,8 +5,8 @@
                 <h5>
                     Total Orders
                 </h5>
-                <div class="number fw-medium lh-1">
-                    20,705
+                <div class="number fw-medium lh-1" *ngIf="statistics$ | async as statistics">
+                    {{ statistics.count}}
                 </div>
             </div>
             <div class="icon text-center bg-daxa rounded-circle text-white position-relative">

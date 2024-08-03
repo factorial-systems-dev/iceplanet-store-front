@@ -1,23 +1,29 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { CustomizerSettingsService } from '../../../customizer-settings/customizer-settings.service';
+import {ProductService} from "../../../shared/service/product.service";
+import {Products} from "../../../shared/model/product.model";
+import {Observable} from "rxjs";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-top-sellers',
     standalone: true,
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink],
+    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, NgIf, AsyncPipe, NgForOf],
     templateUrl: './top-sellers.component.html',
     styleUrl: './top-sellers.component.scss'
 })
-export class TopSellersComponent {
+export class TopSellersComponent implements OnInit {
+    products$: Observable<Products>;
 
     // isToggled
     isToggled = false;
 
     constructor(
+        private productService: ProductService,
         public themeService: CustomizerSettingsService
     ) {
         this.themeService.isToggled$.subscribe(isToggled => {
@@ -25,4 +31,7 @@ export class TopSellersComponent {
         });
     }
 
+    ngOnInit(): void {
+        this.products$ = this.productService.getTopSellingProducts();
+    }
 }
