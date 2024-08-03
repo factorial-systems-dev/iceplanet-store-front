@@ -1,16 +1,6 @@
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './common/not-found/not-found.component';
 import { EcommerceComponent } from './dashboard/ecommerce/ecommerce.component';
-import { MoreChartsComponent } from './apexcharts/more-charts/more-charts.component';
-import { PolarChartsComponent } from './apexcharts/polar-charts/polar-charts.component';
-import { PieChartsComponent } from './apexcharts/pie-charts/pie-charts.component';
-import { RadarChartsComponent } from './apexcharts/radar-charts/radar-charts.component';
-import { RadialBarChartsComponent } from './apexcharts/radial-bar-charts/radial-bar-charts.component';
-import { MixedChartsComponent } from './apexcharts/mixed-charts/mixed-charts.component';
-import { ColumnChartsComponent } from './apexcharts/column-charts/column-charts.component';
-import { AreaChartsComponent } from './apexcharts/area-charts/area-charts.component';
-import { LineChartsComponent } from './apexcharts/line-charts/line-charts.component';
-import { ApexchartsComponent } from './apexcharts/apexcharts.component';
 import { InternalErrorComponent } from './common/internal-error/internal-error.component';
 import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { TermsConditionsComponent } from './settings/terms-conditions/terms-conditions.component';
@@ -91,20 +81,5 @@ export const routes: Routes = [
     },
     {path: 'search', component: SearchPageComponent},
     {path: 'internal-error', component: InternalErrorComponent},
-    {
-        path: 'charts',
-        component: ApexchartsComponent,
-        children: [
-            {path: '', component: LineChartsComponent},
-            {path: 'area', component: AreaChartsComponent},
-            {path: 'column', component: ColumnChartsComponent},
-            {path: 'mixed', component: MixedChartsComponent},
-            {path: 'radialbar', component: RadialBarChartsComponent},
-            {path: 'radar', component: RadarChartsComponent},
-            {path: 'pie', component: PieChartsComponent},
-            {path: 'polar', component: PolarChartsComponent},
-            {path: 'more', component: MoreChartsComponent}
-        ]
-    },
     {path: '**', component: NotFoundComponent} // This line will remain down from the whole pages component list
 ];
