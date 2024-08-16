@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, isDevMode, OnInit} from '@angular/core';
 import { CommonModule, NgClass, ViewportScroller } from '@angular/common';
 import { RouterOutlet, Router, Event, NavigationEnd } from '@angular/router';
 import { SidebarComponent } from './common/sidebar/sidebar.component';
@@ -16,10 +16,9 @@ import {AuthService} from "./authentication/auth.service";
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
-
+export class AppComponent implements OnInit {
     // Title
-    title = 'Daxa - Angular 18 Material Design Admin Dashboard Template';
+    title = 'IcePlanet Cold Store and Protein Shop';
 
     // isSidebarToggled
     isSidebarToggled = false;

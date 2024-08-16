@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
-    base_url: 'http://localhost:3000',
-    paystack_key: 'pk_test_a0fa9ec7220232efc363d83de99ac17b7bcdb609'
+    base_url: 'http://localhost:3000/api/v1',
+    paystack_key: 'pk_test_94dbaebf2467e2b41e3552f23a093e7e55cbe57e'
 };

@@ -12,27 +12,6 @@ import {map, tap} from "rxjs/operators";
 const ORDER_URL = environment.base_url + '/order';
 const PAYMENT_URL = environment.base_url + '/payment';
 const DEFAULT_EMAIL: string = 'user@factorialsystem.io';
-const Months: string[] = [
-    'Jan', 'Feb', 'Mar',
-    'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep',
-    'Oct', 'Nov', 'Dec'
-];
-const data_points_array = [
-    {x: 'Jan', y: 0},
-    {x: 'Feb', y: 0},
-    {x: 'Mar', y: 0},
-    {x: 'Apr', y: 0},
-    {x: 'May', y: 0},
-    {x: 'Jun', y: 0},
-    {x: 'Jul', y: 0},
-    {x: 'Aug', y: 0},
-    {x: 'Sep', y: 0},
-    {x: 'Oct', y: 0},
-    {x: 'Nov', y: 0},
-    {x: 'Dec', y: 0}
-];
-
 const data_points = [
     0,0,0,0,0,0,0,0,0,0,0,0
 ]

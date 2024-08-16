@@ -10,15 +10,12 @@ import {SnackbarService} from "../shared/service/snackbar.service";
 
 
 interface AuthSignUpRequestData {
-    username: string;
     email: string;
     fullName: string;
-    telephone: string;
+    telephoneNumber: string;
     address: string;
     password: string;
     organization: string;
-    captchaResponse: string;
-    roles: string[];
 }
 
 export interface AuthSignUpResponseData {
@@ -48,10 +45,10 @@ export interface CustomJwtDecoded {
     roles: string[];
 }
 
-const AUTH_URL = environment.base_url + '/api/v1/auth';
-const SIGNUP_URL = environment.base_url + '/api/v1/auth/signup';
+
+const SIGNUP_URL = environment.base_url + '/auth/signup';
 const SIGNIN_URL = environment.base_url + '/auth/login';
-const UPDATE_URL = environment.base_url + '/api/v1/users';
+
 
 
 @Injectable({
@@ -61,11 +58,7 @@ export class AuthService {
     private subject = new BehaviorSubject<User | null>(null);
     public user$ = this.subject.asObservable();
     public user: User;
-
-    // public isLoggedIn = false;
-    // public userId = 0;
     private failedReq: string;
-    //
     private tokenExpirationTimer: NodeJS.Timer | number | null;
 
     constructor (
@@ -74,30 +67,23 @@ export class AuthService {
         private  snackService: SnackbarService) {}
 
 
-    signup(username: string, email: string, password: string,
-           fullName: string, telephone: string, address: string,
-           organization: string, captchaResponse: string): Observable<AuthSignUpResponseData> {
-
-        const roles = ['user'];
+    signup(name: string, email: string, password: string, telephone: string,
+           address: string, organization: string): Observable<AuthSignUpResponseData> {
 
         const signupRequest: AuthSignUpRequestData = {
-            username,
             email,
-            fullName,
+            fullName: name,
             password,
-            telephone,
+            telephoneNumber: telephone,
             address,
-            organization,
-            captchaResponse,
-            roles
+            organization
         };
 
-        return this.http.post<AuthSignUpResponseData>(SIGNUP_URL, signupRequest)
-            .pipe(
-                catchError(err => {
-                    return this.handleError(err);
-                })
-            );
+        return this.http.post<AuthSignUpResponseData>(SIGNUP_URL, signupRequest).pipe(
+            catchError(err => {
+                return this.handleError(err);
+            })
+        );
     }
 
     login(email: string, password: string): Observable<AuthSignInResponseData> {
@@ -151,6 +137,10 @@ export class AuthService {
 
             case 401:
                 errorMessage = `Unauthorized error occurred: ${errorResponse.error.message}`;
+                break;
+
+            case 409:
+                errorMessage = errorResponse.error.message;
                 break;
 
             case 500:

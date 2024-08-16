@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    DestroyRef,
+    ElementRef,
+    inject,
+    OnDestroy,
+    OnInit,
+    Renderer2,
+    ViewChild
+} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
 import {RouterLink} from '@angular/router';
@@ -22,11 +32,27 @@ import {ProductService} from "../../../shared/service/product.service";
 import {Products} from "../../../shared/model/product.model";
 import {map, tap} from "rxjs/operators";
 import {CartService} from "../../../shared/service/cart.service";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'app-e-products-grid',
     standalone: true,
-    imports: [RouterLink, MatCardModule, MatCheckboxModule, MatSliderModule, FormsModule, MatButtonModule, MatIconModule, MatSelectModule, AsyncPipe, NgForOf, NgIf, NgOptimizedImage, CurrencyPipe, NgClass],
+    imports: [
+        RouterLink,
+        MatCardModule,
+        MatCheckboxModule,
+        MatSliderModule,
+        FormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSelectModule,
+        AsyncPipe,
+        NgForOf,
+        NgIf,
+        NgOptimizedImage,
+        CurrencyPipe,
+        NgClass
+    ],
     templateUrl: './e-products-grid.component.html',
     styleUrl: './e-products-grid.component.scss'
 })
@@ -35,8 +61,8 @@ export class EProductsGridComponent implements OnInit, OnDestroy, AfterViewInit 
     products$: Observable<Products>;
     categories$: Observable<string[]>;
     subject = new BehaviorSubject(0);
+    private destroyRef = inject(DestroyRef);
 
-    private eventSubscription: Subscription;
     @ViewChild('input') input: ElementRef;
 
     // isToggled
@@ -56,12 +82,9 @@ export class EProductsGridComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     ngAfterViewInit(): void {
-        if (this.eventSubscription) {
-            this.eventSubscription.unsubscribe();
-        }
-
-        this.eventSubscription = fromEvent(this.input.nativeElement, 'keyup')
+        fromEvent(this.input.nativeElement, 'keyup')
             .pipe(
+                takeUntilDestroyed(this.destroyRef),
                 debounceTime(200),
                 distinctUntilChanged(),
                 tap(() => {
@@ -100,8 +123,7 @@ export class EProductsGridComponent implements OnInit, OnDestroy, AfterViewInit 
         }
     }
 
-    ngOnDestroy(): void {
-    }
+    ngOnDestroy(): void {}
 
     addToCart($event: MouseEvent, id: string) {
         // @ts-ignore
@@ -116,6 +138,7 @@ export class EProductsGridComponent implements OnInit, OnDestroy, AfterViewInit 
         const innerHidden: HTMLInputElement = document.getElementById(_id + '-hidden');
 
         this.products$.pipe(
+            takeUntilDestroyed(this.destroyRef),
             map(p => {
                 const product = p.products.find(p => p._id === _id);
                 if (product) {
@@ -124,6 +147,7 @@ export class EProductsGridComponent implements OnInit, OnDestroy, AfterViewInit 
                         return bundle;
                     }
                 }
+
                 return {_id: 0, price: 0};
             })
         ).subscribe(b => {
