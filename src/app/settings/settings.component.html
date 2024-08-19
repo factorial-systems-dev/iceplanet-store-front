@@ -22,6 +22,38 @@
     [class.component-dark-theme]="themeService.isDark()"
     [class.rtl-enabled]="themeService.isRTLEnabled()"
 >
+
+    <div class="profile-content mb-5" *ngIf="authService.user$ | async as user">
+        <div class="d-md-flex align-items-end justify-content-between">
+            <div class="d-md-flex align-items-end">
+                <div class="image position-relative">
+                    <img ngSrc="{{user.imageUrl}}" class="rounded-circle" alt="profile-image" width="200" height="200">
+                    <button type="button" mat-button class="edit-btn" [matMenuTriggerFor]="editProfilePhotoMenu">
+                        <i class="material-symbols-outlined">
+                            photo_camera
+                        </i>
+                    </button>
+                    <mat-menu #editProfilePhotoMenu="matMenu" class="card-header-menu" xPosition="after">
+                        <button mat-menu-item (click)="uploadPhoto()">
+                            Upload Photo
+                        </button>
+                        <button mat-menu-item (click)="removePhoto()">
+                            Remove
+                        </button>
+                    </mat-menu>
+                </div>
+                <div class="title">
+                        <span class="d-block fw-medium">
+                           {{user.fullName}}
+                        </span>
+                    <span class="d-block text-body">
+                           {{user.email }}
+                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <mat-card-content>
         <ul class="pl-0 mt-0 list-unstyled">
             <li class="d-inline-block">
@@ -32,21 +64,6 @@
             <li class="d-inline-block">
                 <a routerLink="/settings/change-password" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                     Change Password
-                </a>
-            </li>
-            <li class="d-inline-block">
-                <a routerLink="/settings/connections" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                    Connections
-                </a>
-            </li>
-            <li class="d-inline-block">
-                <a routerLink="/settings/privacy-policy" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                    Privacy Policy
-                </a>
-            </li>
-            <li class="d-inline-block">
-                <a routerLink="/settings/terms-conditions" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                    Terms & Conditions
                 </a>
             </li>
         </ul>

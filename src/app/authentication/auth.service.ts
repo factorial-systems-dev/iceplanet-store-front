@@ -5,7 +5,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {jwtDecode} from 'jwt-decode';
 import {environment} from "../../environments/environment";
-import {User} from "./user.model";
+import {BackEndUser, User} from "./user.model";
 import {SnackbarService} from "../shared/service/snackbar.service";
 
 
@@ -41,15 +41,13 @@ export interface CustomJwtDecoded {
     name: string;
     preferred_username: string;
     organization: string;
+    imageUrl: string;
     exp: number;
     roles: string[];
 }
 
-
 const SIGNUP_URL = environment.base_url + '/auth/signup';
 const SIGNIN_URL = environment.base_url + '/auth/login';
-
-
 
 @Injectable({
     providedIn: 'root'
@@ -65,7 +63,6 @@ export class AuthService {
         private http: HttpClient,
         private router: Router,
         private  snackService: SnackbarService) {}
-
 
     signup(name: string, email: string, password: string, telephone: string,
            address: string, organization: string): Observable<AuthSignUpResponseData> {
@@ -112,6 +109,7 @@ export class AuthService {
                 decoded.name,
                 decoded.preferred_username,
                 decoded.organization,
+                decoded.imageUrl,
                 responseData.access_token,
                 dt
             );
@@ -187,6 +185,7 @@ export class AuthService {
                     userData.email,
                     userData.fullName,
                     userData.organization,
+                    userData.imageUrl,
                     userData._token,
                     dt
                 );
@@ -211,6 +210,10 @@ export class AuthService {
 
         this.tokenExpirationTimer = null;
         this.snackService.message('You have successfully logged out');
+    }
+
+    getUser(): Observable<BackEndUser> {
+        return this.http.get<BackEndUser>(environment.base_url + '/auth/user');
     }
 
     setFailedReq(value: string) {

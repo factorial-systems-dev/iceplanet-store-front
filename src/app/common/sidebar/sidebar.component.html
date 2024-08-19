@@ -51,16 +51,6 @@
                             Orders
                         </span>
                     </a>
-
-                    <a *ngIf="(authService.user$ | async)" routerLink="/profile" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <i class="material-symbols-outlined">
-                            account_circle
-                        </i>
-
-                        <span class="title">
-                            Profile
-                        </span>
-                    </a>
                     <a *ngIf="!(authService.user$ | async)" routerLink="/authentication" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <i class="material-symbols-outlined">
                             login

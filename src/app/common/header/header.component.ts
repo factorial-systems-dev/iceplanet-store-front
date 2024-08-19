@@ -1,4 +1,4 @@
-import {AsyncPipe, NgClass, NgIf} from '@angular/common';
+import {AsyncPipe, NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { Component, HostListener } from '@angular/core';
 import { ToggleService } from '../sidebar/toggle.service';
@@ -11,7 +11,7 @@ import {CartService} from "../../shared/service/cart.service";
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [NgClass, MatMenuModule, MatButtonModule, RouterLink, RouterLinkActive, AsyncPipe, NgIf],
+    imports: [NgClass, MatMenuModule, MatButtonModule, RouterLink, RouterLinkActive, AsyncPipe, NgIf, NgOptimizedImage],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })
@@ -70,5 +70,6 @@ export class HeaderComponent {
 
     logout() {
         this.authService.logout();
+        this.router.navigate(['/']).then(r => {});
     }
 }

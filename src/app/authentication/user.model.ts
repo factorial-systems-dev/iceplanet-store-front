@@ -3,6 +3,7 @@ export class User {
                 public email: string,
                 public fullName: string,
                 public organization: string,
+                public imageUrl: string,
                 private _token: string,
                 private _tokenExpirationDate: Date) {}
 
@@ -17,4 +18,13 @@ export class User {
     get tokenExpirationDate() {
         return this._tokenExpirationDate;
     }
+}
+
+export interface BackEndUser {
+    id: string;
+    email: string;
+    fullName: string;
+    telephoneNumber: string;
+    address: string;
+    imageUrl: string;
 }
