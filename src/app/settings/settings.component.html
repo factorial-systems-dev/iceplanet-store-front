@@ -28,21 +28,13 @@
             <div class="d-md-flex align-items-end">
                 <div class="image position-relative">
                     <img ngSrc="{{user.imageUrl}}" class="rounded-circle" alt="profile-image" width="200" height="200">
-                    <button type="button" mat-button class="edit-btn" [matMenuTriggerFor]="editProfilePhotoMenu">
-                        <i class="material-symbols-outlined">
-                            photo_camera
-                        </i>
+
+                    <button mat-flat-button color="primary" class="mr-5">Upload Photo
+                        <input (change)="onFileChange($event)" style="opacity: 0; position:absolute; left:0px; top:0px; width:100%; height:100%;" type="file"/>
                     </button>
-                    <mat-menu #editProfilePhotoMenu="matMenu" class="card-header-menu" xPosition="after">
-                        <button mat-menu-item (click)="uploadPhoto()">
-                            Upload Photo
-                        </button>
-                        <button mat-menu-item (click)="removePhoto()">
-                            Remove
-                        </button>
-                    </mat-menu>
+                    <button mat-flat-button color="warn" (click)="removePhoto()" class="mr-5">Remove</button>
                 </div>
-                <div class="title">
+                <div class="title ml-5">
                         <span class="d-block fw-medium">
                            {{user.fullName}}
                         </span>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpRequest} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {jwtDecode} from 'jwt-decode';
 import {environment} from "../../environments/environment";
@@ -212,8 +212,29 @@ export class AuthService {
         this.snackService.message('You have successfully logged out');
     }
 
+    reloadUser() {
+        this.http.get<BackEndUser>(environment.base_url + '/auth/user').subscribe( u => {
+            if (u) {
+                const clonedUser = this.user.createNewUserFromSelf(u.imageUrl);
+                this.user = clonedUser;
+                this.subject.next(clonedUser);
+            }
+        });
+    }
+
     getUser(): Observable<BackEndUser> {
         return this.http.get<BackEndUser>(environment.base_url + '/auth/user');
+    }
+
+    uploadImage(file: File): Observable<any> {
+        const data: FormData = new FormData();
+        data.append('file', file);
+
+        return this.http.post(`${environment.base_url}/auth/upload-avatar`, data);
+    }
+
+    removeImage(): Observable<any> {
+        return this.http.delete(environment.base_url + '/api/v1/auth/delete-avatar');
     }
 
     setFailedReq(value: string) {

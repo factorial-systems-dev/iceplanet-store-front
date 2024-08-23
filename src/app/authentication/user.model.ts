@@ -18,6 +18,10 @@ export class User {
     get tokenExpirationDate() {
         return this._tokenExpirationDate;
     }
+
+    createNewUserFromSelf(imageUrl: string) {
+        return new User(this.id, this.email, this.fullName, this.organization, imageUrl, this._token, this._tokenExpirationDate);
+    }
 }
 
 export interface BackEndUser {
