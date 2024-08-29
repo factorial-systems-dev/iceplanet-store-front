@@ -67,6 +67,36 @@ button {
     margin-bottom: 25px !important;
 }
 
+.loading-container {
+    display: flex;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 80vw;
+    height: 80vh;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 5;
+}
+
+.loader {
+    margin: 0 auto;
+    width: 60px;
+    position: absolute;
+    display: block;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    //@include transform-translate-y(-50%);
+    text-align: center;
+    top: 50%;
+
+    //&:before {
+    //    content: '';
+    //    display: block;
+    //    padding-top: 100%;
+    //}
+}
+
 // Utilities CSS
 @import "./utilities";
 

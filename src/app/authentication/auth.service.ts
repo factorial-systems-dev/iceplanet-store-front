@@ -200,6 +200,25 @@ export class AuthService {
         }
     }
 
+    updateUser(firstName: string, lastName: string, telephone: string, address: string): Observable<any> {
+        const user = {
+            fullName: `${firstName} ${lastName}`,
+            telephoneNumber: telephone,
+            address
+        };
+
+        return this.http.put(environment.base_url + '/auth/update', user);
+    }
+
+    changePassword(old_password: string, new_password: string): Observable<any> {
+        const data = {
+            old_password,
+            new_password
+        };
+
+        return this.http.put(environment.base_url + '/auth/change-password', data);
+    }
+
     logout() {
         this.subject.next(null);
         localStorage.removeItem('userData');
@@ -234,7 +253,7 @@ export class AuthService {
     }
 
     removeImage(): Observable<any> {
-        return this.http.delete(environment.base_url + '/api/v1/auth/delete-avatar');
+        return this.http.delete(environment.base_url + '/auth/delete-avatar');
     }
 
     setFailedReq(value: string) {

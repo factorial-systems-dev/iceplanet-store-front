@@ -1,3 +1,13 @@
+
+<ng-container *ngIf="(loading$ | async) as loading">
+    <div *ngIf="loading" class="loader flex-content-center">
+        <mat-progress-spinner
+            color="primary"
+            mode="indeterminate">
+        </mat-progress-spinner>
+    </div>
+</ng-container>
+
 <div
     class="account-settings-card"
     [class.rtl-enabled]="themeService.isRTLEnabled()"
@@ -8,84 +18,79 @@
     <p>
         Update your photo and personal details here.
     </p>
-    <div class="row" *ngIf="user$ | async as user">
-        <div class="col-sm-6">
-            <div class="mb-25">
-                <label class="main-label d-block lh-1 text-black">
-                    First Name
-                </label>
-                <mat-form-field>
-                    <mat-label>
-                        First name
-                    </mat-label>
-                    <input matInput [value]="user.fullName.split(' ')[0]">
-                </mat-form-field>
+    <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()" *ngIf="settingsForm">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="mb-25">
+                    <label class="main-label d-block lh-1 text-black">
+                        First Name
+                    </label>
+                    <mat-form-field>
+                        <mat-label>
+                            First name
+                        </mat-label>
+                        <input matInput formControlName="firstName">
+                    </mat-form-field>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="mb-25">
-                <label class="main-label d-block lh-1 text-black">
-                    Last Name
-                </label>
-                <mat-form-field>
-                    <mat-label>
-                        Last name
-                    </mat-label>
-                    <input matInput [value]="user.fullName.split(' ')![1]">
-                </mat-form-field>
+            <div class="col-sm-6">
+                <div class="mb-25">
+                    <label class="main-label d-block lh-1 text-black">
+                        Last Name
+                    </label>
+                    <mat-form-field>
+                        <mat-label>
+                            Last name
+                        </mat-label>
+                        <input matInput formControlName="lastName">
+                    </mat-form-field>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="mb-25">
-                <label class="main-label d-block lh-1 text-black">
-                    Email Address
-                </label>
-                <mat-form-field>
-                    <mat-label>
-                        Email address
-                    </mat-label>
-                    <input matInput [value]="user.email" readonly>
-                </mat-form-field>
+            <div class="col-sm-6">
+                <div class="mb-25">
+                    <label class="main-label d-block lh-1 text-black">
+                        Email Address
+                    </label>
+                    <mat-form-field>
+                        <mat-label>
+                            Email address
+                        </mat-label>
+                        <input matInput formControlName="email" readonly>
+                    </mat-form-field>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="mb-25">
-                <label class="main-label d-block lh-1 text-black">
-                    Phone Number
-                </label>
-                <mat-form-field>
-                    <mat-label>
-                        Phone number
-                    </mat-label>
-                    <input matInput [value]="user.telephoneNumber">
-                </mat-form-field>
+            <div class="col-sm-6">
+                <div class="mb-25">
+                    <label class="main-label d-block lh-1 text-black">
+                        Phone Number
+                    </label>
+                    <mat-form-field>
+                        <mat-label>
+                            Phone number
+                        </mat-label>
+                        <input matInput formControlName="telephone">
+                    </mat-form-field>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-12">
-            <div class="mb-25">
-                <label class="main-label d-block lh-1 text-black">
-                    Address
-                </label>
-                <mat-form-field>
-                    <mat-label>
+            <div class="col-sm-12">
+                <div class="mb-25">
+                    <label class="main-label d-block lh-1 text-black">
                         Address
-                    </mat-label>
-                    <textarea matInput placeholder="E.g. It makes me feel..." [value]="user.address"></textarea>
-                </mat-form-field>
+                    </label>
+                    <mat-form-field>
+                        <mat-label>
+                            Address
+                        </mat-label>
+                        <textarea matInput placeholder="E.g. It makes me feel..." formControlName="address"></textarea>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-    </div>
 
-<!--    <div class="mb-25">-->
-<!--        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>-->
-<!--    </div>-->
-
-    <div class="btn-box">
-        <button mat-button>
-            Update Profile
-        </button>
-        <button mat-button>
-            Cancel
-        </button>
-    </div>
+        <div class="btn-box" type="submit">
+            <button mat-button>
+                Update Profile
+            </button>
+        </div>
+    </form>
 </div>
