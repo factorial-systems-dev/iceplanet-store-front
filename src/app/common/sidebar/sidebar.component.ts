@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { NgScrollbarModule } from 'ngx-scrollbar';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
-import { ToggleService } from './toggle.service';
+import {Component} from '@angular/core';
+import {NgScrollbarModule} from 'ngx-scrollbar';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {Router, RouterLink, RouterLinkActive, RouterModule} from '@angular/router';
+import {ToggleService} from './toggle.service';
 import {AsyncPipe, NgClass, NgIf} from '@angular/common';
-import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
+import {CustomizerSettingsService} from '../../customizer-settings/customizer-settings.service';
 import {AuthService} from "../../authentication/auth.service";
 
 @Component({
@@ -23,6 +23,7 @@ export class SidebarComponent {
     isToggled = false;
 
     constructor(
+        private router: Router,
         public authService: AuthService,
         private toggleService: ToggleService,
         public themeService: CustomizerSettingsService
@@ -43,4 +44,8 @@ export class SidebarComponent {
     // Mat Expansion
     panelOpenState = false;
 
+    logout() {
+        this.authService.logout();
+        this.router.navigate(['/']).then(r => r);
+    }
 }
