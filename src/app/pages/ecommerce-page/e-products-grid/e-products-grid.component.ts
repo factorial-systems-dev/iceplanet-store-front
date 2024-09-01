@@ -6,7 +6,6 @@ import {
     inject,
     OnDestroy,
     OnInit,
-    Renderer2,
     ViewChild
 } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
@@ -25,7 +24,6 @@ import {
     distinctUntilChanged,
     fromEvent,
     Observable,
-    Subscription,
     switchMap
 } from "rxjs";
 import {ProductService} from "../../../shared/service/product.service";

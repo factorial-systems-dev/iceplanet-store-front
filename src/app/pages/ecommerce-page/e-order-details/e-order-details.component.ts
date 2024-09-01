@@ -8,12 +8,13 @@ import { CustomizerSettingsService } from '../../../customizer-settings/customiz
 import {OrderService} from "../../../shared/service/order.service";
 import {Order, OrderItem} from "../../../shared/model/order.model";
 import {BehaviorSubject, Subscription} from "rxjs";
-import {AsyncPipe, CurrencyPipe, DatePipe, NgIf} from "@angular/common";
+import {AsyncPipe, CurrencyPipe, DatePipe, NgClass, NgIf} from "@angular/common";
+import {tap} from "rxjs/operators";
 
 @Component({
     selector: 'app-e-order-details',
     standalone: true,
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, AsyncPipe, NgIf, CurrencyPipe, DatePipe],
+    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, AsyncPipe, NgIf, CurrencyPipe, DatePipe, NgClass],
     templateUrl: './e-order-details.component.html',
     styleUrl: './e-order-details.component.scss'
 })

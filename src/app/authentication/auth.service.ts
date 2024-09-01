@@ -256,6 +256,10 @@ export class AuthService {
         return this.http.delete(environment.base_url + '/auth/delete-avatar');
     }
 
+    request_password_reset(email: string): Observable<string> {
+        return this.http.post<string>(environment.base_url + '/auth/reset-password', {email});
+    }
+
     setFailedReq(value: string) {
         this.failedReq = value;
     }

@@ -34,7 +34,7 @@
                     Order ID: {{ o._id }}
                 </span>
                 <div class="numbers position-relative d-sm-flex align-items-center justify-content-between">
-                    <div class="box">
+                    <div class="box" [ngClass]="{active: o.status === 'Pending'}">
                         <div class="rounded-circle text-center transition text-white fw-medium">
                             01
                         </div>
@@ -42,20 +42,20 @@
                             Order Pending
                         </span>
                     </div>
-                    <div class="box">
+                    <div class="box" [ngClass]="{active: o.status === 'Cancelled'}">
                         <div class="rounded-circle text-center transition text-white fw-medium">
                             02
                         </div>
                         <span class="fw-medium d-block text-white">
-                            Paid
+                            Cancelled
                         </span>
                     </div>
-                    <div class="box active">
+                    <div class="box" [ngClass]="{active: o.status === 'Paid'}">
                         <div class="rounded-circle text-center transition text-white fw-medium">
                             03
                         </div>
                         <span class="fw-medium d-block text-white">
-                            Shipped
+                            Paid
                         </span>
                     </div>
                     <div class="box">
@@ -84,8 +84,6 @@
                 <div class="recent-orders-table">
                     <div class="table-responsive">
                         <table mat-table [dataSource]="dataSource">
-
-
                             <!-- Product Column -->
                             <ng-container matColumnDef="product">
                                 <th mat-header-cell *matHeaderCellDef>
@@ -168,7 +166,7 @@
                                     Total :
                                 </td>
                                 <td class="text-body">
-                                    {{ o.subtotal - o.discount | currency: "₦":"symbol":"1.0-0"}}
+                                    {{(o.deliveryPrice ? o.grandTotal - o.deliveryPrice : o.grandTotal) | currency: "₦":"symbol":"1.0-0"}}
                                 </td>
                             </tr>
                             <tr>
@@ -184,7 +182,7 @@
                                     Subtotal :
                                 </td>
                                 <td class="text-body">
-                                    {{o.subtotal | currency: "₦":"symbol":"1.0-0"}}
+                                    {{(o.deliveryPrice ? o.grandTotal - o.deliveryPrice + o.discount : o.grandTotal - o.discount) | currency: "₦":"symbol":"1.0-0"}}
                                 </td>
                             </tr>
                             <tr>
