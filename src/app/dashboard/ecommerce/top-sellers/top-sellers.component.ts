@@ -7,12 +7,12 @@ import { CustomizerSettingsService } from '../../../customizer-settings/customiz
 import {ProductService} from "../../../shared/service/product.service";
 import {Products} from "../../../shared/model/product.model";
 import {Observable} from "rxjs";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 
 @Component({
     selector: 'app-top-sellers',
     standalone: true,
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, NgIf, AsyncPipe, NgForOf],
+    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, NgIf, AsyncPipe, NgForOf, NgOptimizedImage],
     templateUrl: './top-sellers.component.html',
     styleUrl: './top-sellers.component.scss'
 })

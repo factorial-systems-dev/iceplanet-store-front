@@ -1,4 +1,4 @@
-import {AsyncPipe, CurrencyPipe, NgClass, NgFor, NgIf} from '@angular/common';
+import {AsyncPipe, CurrencyPipe, NgClass, NgFor, NgIf, NgOptimizedImage} from '@angular/common';
 import {Component, DestroyRef, inject, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -41,14 +41,13 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
         MatInputModule,
         FormsModule,
         StarRatingComponent,
-        MatProgressBarModule, AsyncPipe, NgIf, CurrencyPipe, MatOption, MatSelect, ReactiveFormsModule
+        MatProgressBarModule, AsyncPipe, NgIf, CurrencyPipe, MatOption, MatSelect, ReactiveFormsModule, NgOptimizedImage
     ],
     templateUrl: './e-product-details.component.html',
     styleUrl: './e-product-details.component.scss'
 })
 export class EProductDetailsComponent implements OnInit, OnDestroy {
     @ViewChild('bundle') select: MatSelect;
-    //@ViewChild('text') text: HTMLTextAreaElement;
 
     private id: string;
     private product: Product;
@@ -67,23 +66,6 @@ export class EProductDetailsComponent implements OnInit, OnDestroy {
 
     // isToggled
     isToggled = false;
-
-    // Product Images
-    productImages = [
-        {
-            url: 'images/products/product-details1.jpg'
-        },
-        {
-            url: 'images/products/product-details1.jpg'
-        },
-        {
-            url: 'images/products/product-details1.jpg'
-        },
-        {
-            url: 'images/products/product-details1.jpg'
-        }
-    ]
-    selectedImage: string;
 
     constructor(
         public themeService: CustomizerSettingsService,
@@ -105,7 +87,6 @@ export class EProductDetailsComponent implements OnInit, OnDestroy {
         this.reviewService.getReviewsByProductId(this.id)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(r => this.reviewSubject.next(r));
-
 
         this.product$ = this.productService.getProductById(this.id).pipe(
             tap(product => {
@@ -143,10 +124,6 @@ export class EProductDetailsComponent implements OnInit, OnDestroy {
             this.cartService.removeItem(this.id, b._id);
             this.value--;
         }
-    }
-
-    changeimage(image: string) {
-        this.selectedImage = image;
     }
 
     onSelectChange($event: MatSelectChange) {

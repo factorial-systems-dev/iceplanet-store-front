@@ -59,8 +59,8 @@
                     <mat-card-content>
                         <div class="image position-relative border-radius">
                             <a [routerLink]="['/shop/product-details', product._id]" class="d-block border-radius">
-                                <img ngSrc="/images/products/product1.jpg" class="border-radius transition" alt="product-image" width="580" height="580">
-<!--                                <img ngSrc="{{product.imagePath}}" class="border-radius transition" alt="product-image" width="580" height="580">-->
+<!--                                <img ngSrc="/images/products/product1.jpg" class="border-radius transition" alt="product-image" width="580" height="580">-->
+                                <img ngSrc="{{product.imagePath}}" class="border-radius transition" alt="product-image" width="580" height="580">
                             </a>
                             <button mat-mini-fab (click)="addToCart($event, product._id)">
                                 <i class="ri-shopping-cart-2-line"></i>

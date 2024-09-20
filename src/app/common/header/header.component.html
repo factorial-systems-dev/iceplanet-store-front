@@ -26,6 +26,7 @@
             </div>
         </div>
         <ul class="header-right-side d-flex align-items-center mt-0 mb-0 pl-0 list-unstyled">
+
             <li>
                 <button
                     mat-button
@@ -41,7 +42,7 @@
             <li *ngIf="!(authService.user$ | async)">
                 <button
                     mat-button
-                    class="notifications-menu-bt p-0"
+                    class="messages-menu-btn p-0"
                     (click)="login()"
                 >
                     <i class="material-symbols-outlined">
@@ -53,7 +54,7 @@
             <li *ngIf="(authService.user$ | async)">
                 <button
                     mat-button
-                    class="notifications-menu-bt p-0"
+                    class="messages-menu-btn p-0"
                     (click)="logout()"
                 >
                     <i class="material-symbols-outlined">
@@ -61,6 +62,15 @@
                     </i>
                 </button>
             </li>
+
+            <li>
+                <button mat-icon-button class="messages-menu-btn p-20" (click)="gotoHome()">
+                    <i class="material-symbols-outlined">
+                        storefront
+                    </i>
+                </button>
+            </li>
+
 
             <li>
                 <button mat-icon-button class="messages-menu-btn p-0" (click)="displayCart()">

@@ -37,10 +37,10 @@
                     </a>
                     <a routerLink="/" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <i class="material-symbols-outlined">
-                            shopping_cart
+                            storefront
                         </i>
                         <span class="title">
-                            Shop
+                            Store
                         </span>
                     </a>
                     <a *ngIf="(authService.user$ | async)" routerLink="/order/orders" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

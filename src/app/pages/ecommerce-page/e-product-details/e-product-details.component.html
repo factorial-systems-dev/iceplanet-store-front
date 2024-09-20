@@ -28,200 +28,181 @@
     [class.component-dark-theme]="themeService.isDark()"
     [class.rtl-enabled]="themeService.isRTLEnabled()"
 >
-    <mat-card-content>
-        <div class="row align-items-center">
-            <div class="col-lg-6 col-md-12">
-                <div class="product-details-image">
-                    <div class="product-gallery__featured">
-                        <owl-carousel-o [options]="{items: 1, dots: false, animateIn: 'fadeIn', animateOut: 'fadeOut'}"
-                                        #owlCar>
-                            <ng-container *ngFor="let image of productImages">
-                                <ng-template carouselSlide [id]="image.url">
-                                    <img [src]="image.url" [alt]="image.url" class="border-radius">
-                                </ng-template>
-                            </ng-container>
-                        </owl-carousel-o>
-                    </div>
-                    <div class="product-gallery__carousel">
-                        <owl-carousel-o [options]="{items: 3, dots: false, margin: 10, autoWidth: true}">
-                            <ng-container *ngFor="let image of productImages; let i = index">
-                                <ng-template carouselSlide [id]="image.url+i" [width]="100">
-                                    <a (click)="owlCar.to(image.url); changeimage(image.url+i)" class="border-radius">
-                                        <img [src]="image.url" [alt]="image.url" class="border-radius">
-                                    </a>
-                                </ng-template>
-                            </ng-container>
-                        </owl-carousel-o>
+    <ng-container *ngIf="product$ | async as p">
+        <mat-card-content>
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-12">
+                    <div class="product-details-image">
+                        <div class="product-gallery__featured">
+                            <img [ngSrc]="p.imagePath" [alt]="p.imagePath" class="border-radius" width="950"
+                                 height="950">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-12" *ngIf="product$ | async as p">
-                <div class="product-details-content">
-                    <h3>
-                        {{ p.name }}
-                    </h3>
-                    <div class="price d-flex align-items-center lh-1">
+                <div class="col-lg-6 col-md-12">
+                    <div class="product-details-content">
+                        <h3>
+                            {{ p.name }}
+                        </h3>
+                        <div class="price d-flex align-items-center lh-1">
                         <span class="text-black fw-medium d-block">
                            {{ bundle_price | currency: "₦":"symbol":"1.0-0" }}
                         </span>
-                        <!--                        <span class="text-body d-block">-->
-                        <!--                            $90.00-->
-                        <!--                        </span>-->
-                    </div>
-                    <div class="ratings lh-1 d-flex align-items-center text-body">
-                        <i class="ri-star-fill"></i>
-                        <i class="ri-star-fill"></i>
-                        <i class="ri-star-fill"></i>
-                        <i class="ri-star-fill"></i>
-                        <i class="ri-star-half-line"></i>
-                        <span class="d-inline-block position-relative">
+                        </div>
+                        <div class="ratings lh-1 d-flex align-items-center text-body">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-half-line"></i>
+                            <span class="d-inline-block position-relative">
                             (4.5)
                         </span>
-                    </div>
-                    <p>
-                        {{ p.description }}
-                    </p>
-                    <span class="sub-title d-block text-body">
+                        </div>
+                        <p>
+                            {{ p.description }}
+                        </p>
+                        <span class="sub-title d-block text-body">
                         100% Original Products
                     </span>
-                    <span class="sub-title d-block text-body">
+                        <span class="sub-title d-block text-body">
                         Deliveries to locations on the Island
                     </span>
-                    <mat-form-field>
-                        <mat-label>Bundle</mat-label>
-                        <mat-select [value]="p.bundles[0]._id" (selectionChange)="onSelectChange($event)" #bundle>
-                            @for (bundle of p.bundles; track bundle) {
-                                <mat-option [value]="bundle._id">{{ bundle.unit }}</mat-option>
-                            }
-                        </mat-select>
-                    </mat-form-field>
-                    <div class="add-to-cart d-flex align-items-center">
-                        <div class="quantity-counter">
-                            <button (click)="decrement()">
-                                -
-                            </button>
-                            <input type="number" [(ngModel)]="value"/>
-                            <button (click)="increment()">
-                                +
+                        <mat-form-field>
+                            <mat-label>Bundle</mat-label>
+                            <mat-select [value]="p.bundles[0]._id" (selectionChange)="onSelectChange($event)" #bundle>
+                                @for (bundle of p.bundles; track bundle) {
+                                    <mat-option [value]="bundle._id">{{ bundle.unit }}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                        <div class="add-to-cart d-flex align-items-center">
+                            <div class="quantity-counter">
+                                <button (click)="decrement()">
+                                    -
+                                </button>
+                                <input type="number" [(ngModel)]="value"/>
+                                <button (click)="increment()">
+                                    +
+                                </button>
+                            </div>
+                            <button mat-button (click)="addToCart()">
+                                Add To Cart
                             </button>
                         </div>
-                        <button mat-button (click)="addToCart()">
-                            Add To Cart
-                        </button>
-                    </div>
-                    <ul class="info mb-0 mt-0 pl-0 list-unstyled">
-                        <li class="text-body">
-                            <span class="text-black">Category:</span>
-                            {{ p.category }}
-                        </li>
-                        <li class="text-success">
+                        <ul class="info mb-0 mt-0 pl-0 list-unstyled">
+                            <li class="text-body">
+                                <span class="text-black">Category:</span>
+                                {{ p.category }}
+                            </li>
+                            <li class="text-success">
                             <span class="text-black">
                                 Availability:
                             </span>
-                            In stock
-                        </li>
-                    </ul>
+                                In stock
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <mat-tab-group animationDuration="0ms">
-            <mat-tab label="Ratings & Reviews">
-                <div class="overall-ratings">
-                    <h5>
-                        Ratings
-                    </h5>
-                    <div class="row align-items-center">
-                        <div class="col-md-4 col-lg-3 col-xxxl-2">
-                            <h3>
-                                4.9
-                            </h3>
-                            <span class="d-block text-body">
+            <mat-tab-group animationDuration="0ms">
+                <mat-tab label="Ratings & Reviews">
+                    <div class="overall-ratings">
+                        <h5>
+                            Ratings
+                        </h5>
+                        <div class="row align-items-center">
+                            <div class="col-md-4 col-lg-3 col-xxxl-2">
+                                <h3>
+                                    4.9
+                                </h3>
+                                <span class="d-block text-body">
                                 Overall Rating
                             </span>
-                            <div class="all-ratings d-flex align-items-center">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <span class="text-body position-relative">(158 Reviews)</span>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-lg-9 col-xxxl-10">
-                            <div class="rating-item position-relative">
-                                <div class="ratings d-flex align-items-center">
+                                <div class="all-ratings d-flex align-items-center">
                                     <i class="ri-star-fill"></i>
                                     <i class="ri-star-fill"></i>
                                     <i class="ri-star-fill"></i>
                                     <i class="ri-star-fill"></i>
                                     <i class="ri-star-fill"></i>
-                                    <span class="text-body position-relative">(5.00)</span>
+                                    <span class="text-body position-relative">(158 Reviews)</span>
                                 </div>
-                                <mat-progress-bar mode="determinate" value="80"></mat-progress-bar>
-                                <span class="number text-body d-block">
+                            </div>
+                            <div class="col-md-8 col-lg-9 col-xxxl-10">
+                                <div class="rating-item position-relative">
+                                    <div class="ratings d-flex align-items-center">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <span class="text-body position-relative">(5.00)</span>
+                                    </div>
+                                    <mat-progress-bar mode="determinate" value="80"></mat-progress-bar>
+                                    <span class="number text-body d-block">
                                     (120)
                                 </span>
-                            </div>
-                            <div class="rating-item position-relative">
-                                <div class="ratings d-flex align-items-center">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-line"></i>
-                                    <span class="text-body position-relative">(4.00)</span>
                                 </div>
-                                <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-                                <span class="number text-body d-block">
+                                <div class="rating-item position-relative">
+                                    <div class="ratings d-flex align-items-center">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                        <span class="text-body position-relative">(4.00)</span>
+                                    </div>
+                                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                                    <span class="number text-body d-block">
                                     (25)
                                 </span>
-                            </div>
-                            <div class="rating-item position-relative">
-                                <div class="ratings d-flex align-items-center">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-line"></i>
-                                    <i class="ri-star-line"></i>
-                                    <span class="text-body position-relative">(3.00)</span>
                                 </div>
-                                <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
-                                <span class="number text-body d-block">
+                                <div class="rating-item position-relative">
+                                    <div class="ratings d-flex align-items-center">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                        <i class="ri-star-line"></i>
+                                        <span class="text-body position-relative">(3.00)</span>
+                                    </div>
+                                    <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
+                                    <span class="number text-body d-block">
                                     (9)
                                 </span>
-                            </div>
-                            <div class="rating-item position-relative">
-                                <div class="ratings d-flex align-items-center">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-line"></i>
-                                    <i class="ri-star-line"></i>
-                                    <i class="ri-star-line"></i>
-                                    <span class="text-body position-relative">(2.00)</span>
                                 </div>
-                                <mat-progress-bar mode="determinate" value="8"></mat-progress-bar>
-                                <span class="number text-body d-block">
+                                <div class="rating-item position-relative">
+                                    <div class="ratings d-flex align-items-center">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                        <i class="ri-star-line"></i>
+                                        <i class="ri-star-line"></i>
+                                        <span class="text-body position-relative">(2.00)</span>
+                                    </div>
+                                    <mat-progress-bar mode="determinate" value="8"></mat-progress-bar>
+                                    <span class="number text-body d-block">
                                     (3)
                                 </span>
-                            </div>
-                            <div class="rating-item position-relative">
-                                <div class="ratings d-flex align-items-center">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-line"></i>
-                                    <i class="ri-star-line"></i>
-                                    <i class="ri-star-line"></i>
-                                    <i class="ri-star-line"></i>
-                                    <span class="text-body position-relative">(1.00)</span>
                                 </div>
-                                <mat-progress-bar mode="determinate" value="2"></mat-progress-bar>
-                                <span class="number text-body d-block">
+                                <div class="rating-item position-relative">
+                                    <div class="ratings d-flex align-items-center">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                        <i class="ri-star-line"></i>
+                                        <i class="ri-star-line"></i>
+                                        <i class="ri-star-line"></i>
+                                        <span class="text-body position-relative">(1.00)</span>
+                                    </div>
+                                    <mat-progress-bar mode="determinate" value="2"></mat-progress-bar>
+                                    <span class="number text-body d-block">
                                     (1)
                                 </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row" *ngIf="reviews$ | async as reviews">
+                    <div class="row" *ngIf="reviews$ | async as reviews">
                         <div class="col-md-6" *ngFor="let r of reviews.reviews">
                             <div class="review-item mb-25 border-radius">
                                 <div class="ratings d-flex align-items-center">
@@ -237,9 +218,6 @@
                                 </p>
                                 <div class="user-info d-flex align-items-center">
                                     <div>
-                                        <img src="images/users/user1.jpg" alt="user-image">
-                                    </div>
-                                    <div>
                                     <span class="d-block">
                                         {{ r.userName }}
                                     </span>
@@ -247,26 +225,27 @@
                                 </div>
                             </div>
                         </div>
-                </div>
-                <div class="your-ratings" *ngIf="authService.user$ | async"s>
-                    <h5>
-                        Your Ratings
-                    </h5>
-                    <app-star-rating [(rating)]="selectedRating"/>
-                    <form [formGroup]="ratingForm" (ngSubmit)="onSubmitPost()" *ngIf="ratingForm">
-                        <mat-form-field class="textarea">
-                            <mat-label>
-                                Write review here...
-                            </mat-label>
-                            <textarea matInput formControlName="rating"
-                                      placeholder="E.g. It makes me feel..."></textarea>
-                        </mat-form-field>
-                        <button mat-button type="submit">
-                            Submit
-                        </button>
-                    </form>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
-    </mat-card-content>
+                    </div>
+                    <div class="your-ratings" *ngIf="authService.user$ | async" s>
+                        <h5>
+                            Your Ratings
+                        </h5>
+                        <app-star-rating [(rating)]="selectedRating"/>
+                        <form [formGroup]="ratingForm" (ngSubmit)="onSubmitPost()" *ngIf="ratingForm">
+                            <mat-form-field class="textarea">
+                                <mat-label>
+                                    Write review here...
+                                </mat-label>
+                                <textarea matInput formControlName="rating"
+                                          placeholder="E.g. It makes me feel..."></textarea>
+                            </mat-form-field>
+                            <button mat-button type="submit">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </ng-container>
 </mat-card>
