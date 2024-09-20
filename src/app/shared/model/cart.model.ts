@@ -8,6 +8,7 @@ export interface Cart {
     grandTotal: number;
     items: {
         product: string;
+        image: string;
         bundle: string;
         quantity: number;
         name: string;

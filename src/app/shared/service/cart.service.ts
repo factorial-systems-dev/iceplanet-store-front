@@ -41,6 +41,7 @@ export class CartService {
                 if (bundle) {
                     this.cart.items.push({
                         product: productId,
+                        image: product.imagePath,
                         bundle: bundleId,
                         unit: bundle.unit,
                         quantity: 1,

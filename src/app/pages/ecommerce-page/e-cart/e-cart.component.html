@@ -62,7 +62,7 @@
                             <td class="text-body">
                                 <div class="info d-flex align-items-center">
                                     <div class="image">
-                                        <img src="images/products/product6.png" alt="product-image">
+                                        <img [ngSrc]="item.image" alt="product-image" width="100" height="100">
                                     </div>
                                     <a [routerLink]="['/shop/product-details', item.product]"
                                        class="d-block fw-medium">

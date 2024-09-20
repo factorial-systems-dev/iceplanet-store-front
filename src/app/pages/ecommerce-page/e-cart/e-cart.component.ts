@@ -11,7 +11,7 @@ import {CustomizerSettingsService} from '../../../customizer-settings/customizer
 import {MatOption} from "@angular/material/core";
 import {MatSelect, MatSelectChange} from "@angular/material/select";
 import {CartService} from "../../../shared/service/cart.service";
-import {AsyncPipe, CurrencyPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CurrencyPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {DeliveryService} from "../../../shared/service/delivery.service";
 import {OrderService} from "../../../shared/service/order.service";
 import {AuthService} from "../../../authentication/auth.service";
@@ -26,7 +26,7 @@ declare function PaystackPop(): any;
         MatCardModule, MatMenuModule, MatButtonModule, RouterLink,
         MatFormFieldModule, MatInputModule, FormsModule, QuantityCounterComponent,
         MatOption, MatSelect, NgForOf, AsyncPipe, CurrencyPipe, NgIf,
-        MatCheckboxModule, ReactiveFormsModule
+        MatCheckboxModule, ReactiveFormsModule, NgOptimizedImage
     ],
     templateUrl: './e-cart.component.html',
     styleUrl: './e-cart.component.scss'
