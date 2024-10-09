@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {HttpClient, HttpErrorResponse, HttpEvent, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {jwtDecode} from 'jwt-decode';
 import {environment} from "../../environments/environment";
@@ -101,7 +101,7 @@ export class AuthService {
     private handleAuthentication(responseData: AuthSignInResponseData, self: any) {
         const decoded: CustomJwtDecoded = jwtDecode(responseData.access_token);
         const dt = new Date();
-        dt.setHours(dt.getHours() + 1);
+        dt.setMinutes(dt.getMinutes() + 50);
 
         const user =
             new User(
