@@ -1,20 +1,21 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { RouterLink } from '@angular/router';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatMenuModule} from '@angular/material/menu';
+import {RouterLink} from '@angular/router';
 import {
-    ChartComponent,
+    ApexChart,
+    ApexDataLabels,
+    ApexLegend,
     ApexNonAxisChartSeries,
     ApexResponsive,
-    ApexChart,
-    ApexLegend,
-    NgApexchartsModule,
-    ApexDataLabels,
-    ApexTooltip
+    ApexTooltip,
+    ChartComponent,
+    NgApexchartsModule
 } from "ng-apexcharts";
 import {OrderService} from "../../../shared/service/order.service";
 import {NgIf} from "@angular/common";
+import {Subscription} from "rxjs";
 
 export type ChartOptions = {
     series: ApexNonAxisChartSeries;
@@ -34,14 +35,19 @@ export type ChartOptions = {
     templateUrl: './order-summary.component.html',
     styleUrl: './order-summary.component.scss'
 })
-export class OrderSummaryComponent implements OnInit{
+export class OrderSummaryComponent implements OnInit, OnDestroy {
     @ViewChild("chart") chart: ChartComponent;
     public chartOptions: Partial<ChartOptions>;
+    private subscription: Subscription;
 
     constructor(private orderService: OrderService) {}
 
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+
     ngOnInit(): void {
-        this.orderService.getOrderStatuses().subscribe(o => {
+        this.subscription = this.orderService.getOrderStatuses().subscribe(o => {
             const labels = o.map(s => s._id);
             const series = o.map(s => s.count);
             const sum = series.reduce((a, b) => a + b, 0);
@@ -81,7 +87,7 @@ export class OrderSummaryComponent implements OnInit{
                 ],
                 tooltip: {
                     y: {
-                        formatter: function(val) {
+                        formatter: function (val) {
                             return val + "%";
                         }
                     }
