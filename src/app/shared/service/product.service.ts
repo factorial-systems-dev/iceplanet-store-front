@@ -15,8 +15,7 @@ export class ProductService {
 
     constructor(private http: HttpClient) {}
 
-    public getProducts(page: number = 1, size: number = 20,
-                       sort = 'ascending'): Observable<Products> {
+    public getProducts(page: number = 1, size: number = 20, sort = 'ascending'): Observable<Products> {
 
         const params: { size: number; sort: string; page: number; category?: string } =  {size, sort, page};
         return this.http.get<Products>(PRODUCT_URL, {
@@ -68,8 +67,8 @@ export class ProductService {
 
 
     public search(page: number = 1, size: number = 20, search: string): Observable<Products> {
-        const params: { size: number; page: number } =  {size, page};
-        return this.http.get<Products>(`${PRODUCT_URL}/search/${search}`, {
+        const params: { size: number; page: number, search: string} =  {size, page, search};
+        return this.http.get<Products>(`${PRODUCT_URL}/search`, {
             params
         });
     }
