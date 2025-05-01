@@ -16,7 +16,6 @@ export class ProductService {
     constructor(private http: HttpClient) {}
 
     public getProducts(page: number = 1, size: number = 20, sort = 'ascending'): Observable<Products> {
-
         const params: { size: number; sort: string; page: number; category?: string } =  {size, sort, page};
         return this.http.get<Products>(PRODUCT_URL, {
             params
