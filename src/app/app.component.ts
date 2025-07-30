@@ -4,15 +4,25 @@ import { RouterOutlet, Router, Event, NavigationEnd } from '@angular/router';
 import { SidebarComponent } from './common/sidebar/sidebar.component';
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
-import { CustomizerSettingsComponent } from './customizer-settings/customizer-settings.component';
 import { CustomizerSettingsService } from './customizer-settings/customizer-settings.service';
 import { ToggleService } from './common/sidebar/toggle.service';
 import {AuthService} from "./authentication/auth.service";
+import {WhatsAppButtonComponent} from "./common/whatsapp/whatsappbutton.component";
+import {ChatWidgetComponent} from "./chat/chat-widget/chat-widget.component";
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, CommonModule, SidebarComponent, HeaderComponent, FooterComponent, CustomizerSettingsComponent, NgClass],
+    imports: [
+        RouterOutlet,
+        CommonModule,
+        SidebarComponent,
+        HeaderComponent,
+        FooterComponent,
+        NgClass,
+        WhatsAppButtonComponent,
+        ChatWidgetComponent
+    ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })

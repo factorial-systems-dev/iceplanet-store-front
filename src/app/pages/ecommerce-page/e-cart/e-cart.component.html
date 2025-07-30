@@ -147,28 +147,29 @@
                         </tbody>
                     </table>
                 </div>
-                <mat-form-field *ngIf="(authService.user$ | async)" class="cart-card">
-                    <mat-label>Delivery</mat-label>
-                    <mat-select (selectionChange)="onChange($event)">
-                        @for (zone of (deliveryService.zones$ | async); track zone) {
-                            <mat-option [value]="zone.id">{{ zone.name }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-                <div style="margin-bottom: 10px">
-                </div>
-                <mat-form-field class="cart-card">
-                    <mat-checkbox class="info" (change)="onCheckBoxChange($event)">
-                        Cut
-                        <input matInput>
-                    </mat-checkbox>
-                </mat-form-field>
-
-                <h5>
-                    Add A Note
-                </h5>
-
                 <form [formGroup]="orderForm" (ngSubmit)="onSubmit(orderForm)">
+                    <mat-form-field *ngIf="(authService.user$ | async)" class="cart-card">
+                        <mat-label>Delivery</mat-label>
+                        <mat-select (selectionChange)="onChange($event)" formControlName="delivery">
+                            @for (zone of (deliveryService.zones$ | async); track zone) {
+                                <mat-option [value]="zone.id">{{ zone.name }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <div style="margin-bottom: 10px">
+                    </div>
+                    <mat-form-field class="cart-card">
+                        <mat-checkbox class="info" (change)="onCheckBoxChange($event)" formControlName="cut">
+                            Cut
+                            <input matInput>
+                        </mat-checkbox>
+                    </mat-form-field>
+
+                    <h5>
+                        Add A Note
+                    </h5>
+
+
                     <mat-form-field class="textarea">
                         <mat-label>
                             Write here....

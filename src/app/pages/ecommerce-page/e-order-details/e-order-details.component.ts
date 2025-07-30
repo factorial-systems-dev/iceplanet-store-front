@@ -14,7 +14,18 @@ import {tap} from "rxjs/operators";
 @Component({
     selector: 'app-e-order-details',
     standalone: true,
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, AsyncPipe, NgIf, CurrencyPipe, DatePipe, NgClass],
+    imports: [
+        MatCardModule,
+        MatMenuModule,
+        MatButtonModule,
+        RouterLink,
+        MatTableModule,
+        AsyncPipe,
+        NgIf,
+        CurrencyPipe,
+        DatePipe,
+        NgClass
+    ],
     templateUrl: './e-order-details.component.html',
     styleUrl: './e-order-details.component.scss'
 })

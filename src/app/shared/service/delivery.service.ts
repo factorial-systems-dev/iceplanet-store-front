@@ -18,7 +18,15 @@ export class DeliveryService {
         this.http.get<DeliveryZones>(ZONE_URL)
             .pipe(map(z => z.zones))
             .subscribe(zones => {
-                this.zoneSubject.next(zones);
+                const noZone: DeliveryZone = {
+                    id: '0',
+                    name: 'No Delivery',
+                    description: '',
+                    enabled: true,
+                    price: 0
+                };
+                this.zoneSubject.next([noZone, ...zones]);
+
             });
     }
 }

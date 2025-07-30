@@ -206,27 +206,30 @@
                         </table>
                     </div>
                 </div>
-                <h5>
-                    Payment Method
-                </h5>
-                <div class="payment-method d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <div class="icon">
-                            <img src="images/master-card.png" alt="master-card">
-                        </div>
-                        <div class="info">
+                
+                <ng-container *ngIf="o.status && o.status === 'Paid'">
+                    <h5>
+                        Payment Method
+                    </h5>
+                    <div class="payment-method d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="icon">
+                                <img src="images/master-card.png" alt="master-card">
+                            </div>
+                            <div class="info">
                             <span class="d-block fw-medium">
                                 Payment
                             </span>
-                            <span class="d-block text-body">
+                                <span class="d-block text-body">
                                 Via MasterCard
                             </span>
+                            </div>
                         </div>
-                    </div>
-                    <span class="d-block text-body">
+                        <span class="d-block text-body">
                         {{o.grandTotal | currency: "₦":"symbol":"1.0-0"}}
                     </span>
-                </div>
+                    </div>
+                </ng-container>
             </mat-card-content>
         </mat-card>
     </div>

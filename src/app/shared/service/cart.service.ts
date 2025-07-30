@@ -79,6 +79,12 @@ export class CartService {
         this.recalculateCart();
     }
 
+    removeDelivery() {
+        this.cart.deliveryPrice = 0;
+        this.cart.delivery = null;
+        this.recalculateCart();
+    }
+
     private recalculateCart() {
         const subtotal = this.cart.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
         this.cart.subtotal = subtotal;

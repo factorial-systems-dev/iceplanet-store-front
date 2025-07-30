@@ -148,7 +148,7 @@ export class OrderService {
                 });
             },
             onCancel: () => {
-                this.http.delete(ORDER_URL + '/cancel/' + id ).subscribe(a=> {
+                this.http.delete(ORDER_URL + '/cancel/' + id ).subscribe(a => {
                     this.snackbarService.message('Order has been successfully cancelled');
                 });
             }

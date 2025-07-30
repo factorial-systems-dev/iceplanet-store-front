@@ -65,7 +65,7 @@ export class ProductService {
     }
 
 
-    public search(page: number = 1, size: number = 20, search: string): Observable<Products> {
+    public search(search: string, page: number = 1, size: number = 20 ): Observable<Products> {
         const params: { size: number; page: number, search: string} =  {size, page, search};
         return this.http.get<Products>(`${PRODUCT_URL}/search`, {
             params

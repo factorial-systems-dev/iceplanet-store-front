@@ -88,7 +88,7 @@ export class EProductsGridComponent implements OnInit, OnDestroy, AfterViewInit 
                 tap(() => {
                     if (this.input.nativeElement.value && this.input.nativeElement.value.length > 0) {
                         this.products$ = this.subject.asObservable().pipe(
-                            switchMap(() => this.productService.search(1, 20, this.input.nativeElement.value))
+                            switchMap(() => this.productService.search(this.input.nativeElement.value))
                         );
                     } else {
                         this.products$ = this.subject.asObservable().pipe(

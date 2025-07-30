@@ -1,5 +1,5 @@
 export interface Cart {
-    delivery?: string;
+    delivery?: string | null
     instruction?: string;
     cut?: boolean;
     deliveryPrice: number;

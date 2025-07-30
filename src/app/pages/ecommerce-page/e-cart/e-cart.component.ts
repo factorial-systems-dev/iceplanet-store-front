@@ -54,11 +54,18 @@ export class ECartComponent implements OnInit {
     }
 
     onChange($event: MatSelectChange) {
+        if ($event.value === '0') {
+            this.cartService.removeDelivery();
+            return;
+        }
+
         this.deliveryService.zones$.subscribe(zones => {
             const zone = zones.find(z => z.id === $event.value);
 
             if (zone) {
                 this.cartService.addDelivery(zone);
+            } else {
+                this.cartService.removeDelivery();
             }
         });
     }
@@ -75,6 +82,8 @@ export class ECartComponent implements OnInit {
     private createForm() {
         this.orderForm = this.fb.group({
             instruction: [null],
+            cut: [false],
+            delivery: this.cartService.cart.deliveryPrice > 0 ? this.cartService.cart.delivery : '0'
         });
     }
 
